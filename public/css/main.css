@@ -1,0 +1,46 @@
+.main-container{
+    padding:0;
+}
+
+.flex{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+h2{
+    padding-top:20px;
+    padding-bottom:20px;
+    margin:0;
+}
+
+.sidebar{
+    width:120px;
+    position: absolute;
+    top:65px;
+    left:0;
+    bottom:0;
+    background:#525252;
+}
+
+.sidebar ul{
+    padding:0;
+}
+
+.sidebar ul li a{
+    display:block;
+    text-align: center;
+    padding:10px;
+    color:white;
+}
+
+.sidebar ul li a:hover{
+    background:grey;
+    text-decoration: none;
+}
+
+.main-content{
+    width:100%;
+    padding-left: 150px;
+    padding-right: 30px;
+}
