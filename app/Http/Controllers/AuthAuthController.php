@@ -36,6 +36,10 @@ class AuthAuthController extends Controller
                         dd("user");
                     case "Teachers":
                         return redirect()->intended('/teacher');
+                    case "Students":
+                        return redirect()->intended('/student');
+                    case "Parents":
+                        return redirect()->intended('/parent');
                 }
             }
             dd("not ok");

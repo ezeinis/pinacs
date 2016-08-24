@@ -22,7 +22,7 @@ Route::group(['middleware' => 'admin'], function()
 
 Route::get('/admin', ['as' => 'admin_dashboard', 'uses' => 'Admin\AdminController@getHome']);
 Route::resource('admin/profiles', 'Admin\AdminUsersController', ['only' => ['index', 'show', 'edit', 'update', 'destroy']]);
-Route::get('/user/add/teacher', ['uses' => 'Admin\AdminController@addTeacherView']);
+Route::get('/user/add/{user_role}', ['uses' => 'Admin\AdminController@addUserView']);
 Route::get('/user/store','Admin\AdminUsersController@store');
 
 });
@@ -31,4 +31,16 @@ Route::get('/user/store','Admin\AdminUsersController@store');
 Route::group(['middleware' => 'teacher'], function()
 {
     Route::get('/teacher', ['as' => 'teacher_dashboard', 'uses' => 'TeacherController@getHome']);
+});
+
+//student routes
+Route::group(['middleware' => 'student'], function()
+{
+    Route::get('/student', ['as' => 'student_dashboard', 'uses' => 'StudentController@getHome']);
+});
+
+//parent routes
+Route::group(['middleware' => 'parent'], function()
+{
+    Route::get('/parent', ['as' => 'parent_dashboard', 'uses' => 'ParentController@getHome']);
 });

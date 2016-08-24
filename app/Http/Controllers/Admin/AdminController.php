@@ -14,8 +14,15 @@ class AdminController extends Controller
         return view('protected.admin.admin_dashboard');
     }
 
-    public function addTeacherView()
+    public function addUserView($role)
     {
-        return view('protected.admin.add_teacher');
+        switch($role){
+            case "teacher":
+                return view('protected.admin.add_teacher');
+            case "student":
+                return view('protected.admin.add_students');
+            case "parent":
+                return view('protected.admin.add_parent');
+        }
     }
 }
