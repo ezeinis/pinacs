@@ -5,7 +5,9 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-use App\Role_Users;
+use Sentinel;
+use App\RoleUser;
+use App\Role;
 
 class User extends Authenticatable
 {
@@ -32,8 +34,7 @@ class User extends Authenticatable
     public function role()
 
     {
-
-        return $this->hasOne(Role_Users::class);
-
+        return $this->hasOne(RoleUser::class);
     }
+
 }

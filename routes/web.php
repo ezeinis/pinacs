@@ -19,12 +19,12 @@ Route::get('logout', ['as' => 'logout', 'uses' => 'AuthAuthController@logout']);
 //admin routes
 Route::group(['middleware' => 'admin'], function()
 {
-
 Route::get('/admin', ['as' => 'admin_dashboard', 'uses' => 'Admin\AdminController@getHome']);
-Route::resource('admin/profiles', 'Admin\AdminUsersController', ['only' => ['index', 'show', 'edit', 'update', 'destroy']]);
-Route::get('/user/add/{user_role}', ['uses' => 'Admin\AdminController@addUserView']);
+Route::resource('admin/profiles', 'Admin\AdminUsersController', ['only' => ['index', 'store']]);
+Route::get('/admin/add/{user_role}', ['uses' => 'Admin\AdminController@addUserView']);
 Route::get('/user/store','Admin\AdminUsersController@store');
-
+Route::get('/admin/profiles/{role}', ['uses' => 'Admin\AdminUsersController@filterByRole']);
+Route::get('/admin/classes','Admin\AdminClassesController@index');
 });
 
 //teacher routes

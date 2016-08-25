@@ -13,6 +13,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
     <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -45,14 +46,17 @@
     <div class="container-fluid main-container">
         <div class="sidebar">
             <ul>
-                <li>
-                    <a href="/admin/profiles">Users</a>
+                <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'admin/profiles')===0 || strpos(Route::getCurrentRoute()->getPath(),'admin/add')===0)echo 'active'; ?> <?php if(strpos(Route::getCurrentRoute()->getPath(),'teacher')===0)echo 'hidden'; ?>">
+                    <a href="/admin/profiles"><i class="fa fa-users" aria-hidden="true"></i>Users</a>
                 </li>
-                <li>
-                    <a href="">test</a>
+                <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'admin/classes')===0)echo 'active'; ?> <?php if(strpos(Route::getCurrentRoute()->getPath(),'teacher')===0)echo 'hidden'; ?>">
+                    <a href="/admin/classes"><i class="fa fa-book" aria-hidden="true"></i>Levels - Classes</a>
                 </li>
-                <li>
-                    <a href="">test</a>
+                <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'admin')===0)echo 'hidden'; ?>">
+                    <a href="/admin/profiles">for student</a>
+                </li>
+                <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'admin')===0)echo 'hidden'; ?>">
+                    <a href="/admin/profiles">for teacher</a>
                 </li>
             </ul>
         </div>
@@ -61,8 +65,9 @@
         </div>
     </div>
 
-    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="/js/jquery.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    @yield('js')
 
 </body>
 </html>

@@ -75,6 +75,8 @@ class MigrationCartalystSentinel extends Migration
             $table->increments('id');
             $table->string('email');
             $table->string('password');
+            $table->string('phone')->nullable();
+            $table->integer('parent_to')->nullable()->unsigned();
             $table->text('permissions')->nullable();
             $table->timestamp('last_login')->nullable();
             $table->string('first_name')->nullable();
@@ -83,6 +85,7 @@ class MigrationCartalystSentinel extends Migration
 
             $table->engine = 'InnoDB';
             $table->unique('email');
+            $table->foreign('parent_to')->references('id')->on('users');
         });
 
         Schema::create('role_users', function (Blueprint $table) {

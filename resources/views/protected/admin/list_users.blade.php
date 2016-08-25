@@ -8,41 +8,113 @@
         <div class="col-xs-10">
             <h2>Registered Users</h2>
         </div>
-        <div class="col-xs-2">
-            <div class="btn-group">
-              <a href="#" class="btn btn-default">Add User</a>
-              <a aria-expanded="false" href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="/user/add/teacher">Teacher</a></li>
-                <li><a href="/user/add/student">Student</a></li>
-                <li><a href="/user/add/parent">Parent</a></li>
-              </ul>
-            </div>
+        <div class="col-xs-2 text-right">
+          <div class="btn-group">
+            <a aria-expanded="false" href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            Add User
+            <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+            <li><a href="/admin/add/teacher">Teacher</a></li>
+            <li><a href="/admin/add/student">Student</a></li>
+            <li><a href="/admin/add/parent">Parent</a></li>
+            </ul>
+          </div>
         </div>
     </div>
     <table class="table table-striped table-bordered table-hover">
         <thead>
             <tr>
-              <th>id</th>
-              <th>Role</th>
-              <th>Email</th>
-              <th>First Name</th>
-              <th>Last Name</th>
+              <td class="list_user_filters text-right" colspan="9">
+                <!-- filter role -->
+                <div class="btn-group">
+                  <a aria-expanded="false" href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                  Role
+                  <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a href="/admin/profiles">All <i class="fa fa-check" aria-hidden="true"></i></a></li>
+                    <li><a href="/admin/profiles/admins">Admins</a></li>
+                    <li><a href="/admin/profiles/teachers">Teachers</a></li>
+                    <li><a href="/admin/profiles/students">Students</a></li>
+                    <li><a href="/admin/profiles/parents">Parents</a></li>
+                  </ul>
+                </div>
+                <!-- filter role end-->
+                <!-- filter level -->
+                <div class="btn-group">
+                  <a aria-expanded="false" href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                  Level
+                  <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a href="/admin/profiles">All <i class="fa fa-check" aria-hidden="true"></i></a></li>
+                    <li><a href="/admin/profiles/admins">Pro Junior</a></li>
+                    <li><a href="/admin/profiles/teachers">Junior</a></li>
+                    <li><a href="/admin/profiles/students">Senior</a></li>
+                  </ul>
+                </div>
+                <!-- filter level end-->
+                <!-- filter year -->
+                <div class="btn-group">
+                  <a aria-expanded="false" href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                  Year
+                  <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a href="/admin/profiles">All <i class="fa fa-check" aria-hidden="true"></i></a></li>
+                    <li><a href="/admin/profiles/admins">2014-2015</a></li>
+                    <li><a href="/admin/profiles/teachers">2015-2016</a></li>
+                    <li><a href="/admin/profiles/students">2016-2017</a></li>
+                  </ul>
+                </div>
+                <!-- filter year end-->
+              </td>
             </tr>
         </thead>
-
+        <thead>
+            <tr>
+              <th>#</th>
+              <th>Role</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Class</th>
+              <th>Level</th>
+              <th>School Year</th>
+              <th>Actions</th>
+            </tr>
+        </thead>
         <tbody>
             @foreach ($users as $user)
             <tr>
-                <td>{{ $user->id }}</td>
+                <td>{{ $loop->index }}</td>
                 <td>{{ $user->role->role_name()}}</td>
+                <td>{{ $user->last_name }} {{ $user->first_name }}</td>
                 <td><a href="profiles/{{ $user->id }}">{{ $user->email }}</a></td>
-                <td>{{ $user->first_name }}</td>
-                <td>{{ $user->last_name }}</td>
+                <td>{{ $user->phone }}</td>
+                <td>1</td>
+                <td>Pro Junior</td>
+                <td>2015-2016</td>
+                <td class="list_users_action_container">
+                  <i class="fa fa-eye" data-toggle="tooltip" data-placement="top" title="" data-original-title="Show password" aria-hidden="true"></i>
+                  <i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit user" aria-hidden="true"></i>
+                  <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete user"  aria-hidden="true"></i>
+                </td>
              </tr>
             @endforeach
 
         </tbody>
     </table>
+
+@endsection
+
+@section('js')
+
+<script>
+  $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>
 
 @endsection
