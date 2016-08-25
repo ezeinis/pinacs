@@ -27,7 +27,8 @@ h2{
     top:65px;
     left:0;
     bottom:0;
-    background:#525252;
+    background:#f9f9f9;
+    box-shadow: 3px 0 3px -2px #888;
 }
 
 .sidebar ul{
@@ -38,11 +39,11 @@ h2{
     display:block;
     text-align: center;
     padding:10px;
-    color:white;
+    color:#9e9e9e;
 }
 
 .sidebar ul li a:hover{
-    background:grey;
+    color:#007cba!important;
     text-decoration: none;
 }
 
@@ -67,8 +68,8 @@ h2{
     cursor:pointer;
 }
 
-.active{
-    background:gray;
+.active>a{
+    color:#007cba!important;
 }
 
 .list_user_filters{

@@ -17,4 +17,6 @@ class Assign extends Model
     {
         return $this->belongsTo(ClassYear::class);
     }
+
+
 }

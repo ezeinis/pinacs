@@ -18,6 +18,7 @@ class CreateAssignsTable extends Migration
             $table->foreign('class_year_id')->references('id')->on('class_years');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->string('role',12);
             //$table->foreign('user_id')->references('user_id')->on('role_users');
             $table->timestamps();
         });

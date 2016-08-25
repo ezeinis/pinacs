@@ -89,8 +89,8 @@
         <tr>
           <td>{{$loop->index}}</td>
           <td>{{$level->name}}</td>
-          <td>0</td>
-          <td>0</td>
+          <td>{{$levels_tea_st_numbers[$level->id]['Students']}}</td>
+          <td>{{$levels_tea_st_numbers[$level->id]['Teachers']}}</td>
           <td class="list_users_action_container">
             <i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit user" aria-hidden="true"></i>
             <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete user"  aria-hidden="true"></i>
@@ -186,8 +186,8 @@
           <td>{{$class['class']->name}}</td>
           <td>{{$levels[$class['class']->parent-1]->name}}</td>
           <td>{{$class->school_year}}</td>
-          <td>0</td>
-          <td>0</td>
+          <td>{{count($class['students'])}}</td>
+          <td>{{count($class['teachers'])}}</td>
           <td class="list_users_action_container">
             <i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit user" aria-hidden="true"></i>
             <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete user"  aria-hidden="true"></i>

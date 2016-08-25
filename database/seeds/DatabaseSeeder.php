@@ -75,10 +75,37 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Sentinel::registerAndActivate([
+            'email'    => 'ezeinis12@gmail.com',
+            'password' => 'e21111991',
+            'first_name' => 'Yiannis',
+            'last_name' => 'Elpidis',
+            'phone' => '96718318',
+            'parent_to' => NULL,
+        ]);
+
+        Sentinel::registerAndActivate([
             'email'    => 'ezeinis13@gmail.com',
             'password' => 'e21111991',
             'first_name' => 'Efthimis',
             'last_name' => 'Zeinis',
+            'phone' => '96718318',
+            'parent_to' => NULL,
+        ]);
+
+        Sentinel::registerAndActivate([
+            'email'    => 'ezeinis15@gmail.com',
+            'password' => 'e21111991',
+            'first_name' => 'Kostas',
+            'last_name' => 'Lamo',
+            'phone' => '96718318',
+            'parent_to' => NULL,
+        ]);
+
+        Sentinel::registerAndActivate([
+            'email'    => 'ezeinis16@gmail.com',
+            'password' => 'e21111991',
+            'first_name' => 'Stayros',
+            'last_name' => 'Diolatzis',
             'phone' => '96718318',
             'parent_to' => NULL,
         ]);
@@ -98,8 +125,11 @@ class DatabaseSeeder extends Seeder
         $userUser = Sentinel::findByCredentials(['login' => 'user@user.com']);
         $adminUser = Sentinel::findByCredentials(['login' => 'admin@admin.com']);
         $studentUser = Sentinel::findByCredentials(['login' => 'ezeinis13@gmail.com']);
+        $studentUser2 = Sentinel::findByCredentials(['login' => 'ezeinis15@gmail.com']);
+        $studentUser3 = Sentinel::findByCredentials(['login' => 'ezeinis16@gmail.com']);
         $parentUser = Sentinel::findByCredentials(['login' => 'stathiszeinis@gmail.com']);
         $teacherUser = Sentinel::findByCredentials(['login' => 'ezeinis14@gmail.com']);
+        $teacherUser2 = Sentinel::findByCredentials(['login' => 'ezeinis12@gmail.com']);
 
         $userRole = Sentinel::findRoleByName('Users');
         $adminRole = Sentinel::findRoleByName('Admins');
@@ -111,7 +141,10 @@ class DatabaseSeeder extends Seeder
         $userRole->users()->attach($userUser);
         $adminRole->users()->attach($adminUser);
         $studentRole->users()->attach($studentUser);
+        $studentRole->users()->attach($studentUser2);
+        $studentRole->users()->attach($studentUser3);
         $teacherRole->users()->attach($teacherUser);
+        $teacherRole->users()->attach($teacherUser2);
         $parentRole->users()->attach($parentUser);
 
         $this->command->info('Users assigned to roles seeded!');
@@ -179,10 +212,27 @@ class DatabaseSeeder extends Seeder
         $assign = new Assign;
         $assign->user_id=3;
         $assign->class_year_id=1;
+        $assign->role="Teachers";
         $assign->save();
         $assign = new Assign;
         $assign->user_id=4;
+        $assign->class_year_id=2;
+        $assign->role="Teachers";
+        $assign->save();
+        $assign = new Assign;
+        $assign->user_id=5;
         $assign->class_year_id=1;
+        $assign->role="Students";
+        $assign->save();
+        $assign = new Assign;
+        $assign->user_id=6;
+        $assign->class_year_id=1;
+        $assign->role="Students";
+        $assign->save();
+        $assign = new Assign;
+        $assign->user_id=7;
+        $assign->class_year_id=2;
+        $assign->role="Students";
         $assign->save();
 
         $this->command->info('assigns seeded');

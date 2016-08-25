@@ -13,6 +13,16 @@ class ClassYear extends Model
         return $this->belongsTo(LevelClass::class);
     }
 
+    public function students()
+    {
+        return $this->hasMany(Assign::class)->where('role','Students');
+    }
+
+    public function teachers()
+    {
+        return $this->hasMany(Assign::class)->where('role','Teachers');
+    }
+
     public function assigns()
     {
         return $this->hasMany(Assign::class);
