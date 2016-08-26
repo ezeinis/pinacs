@@ -25,7 +25,6 @@ class AdminUsersController extends Controller
     //store new users added by admin
     public function store(Request $request)
     {
-        //dd($request->class_list);
         $credentials = [
             'email'    => $request->email,
             'password' => $request->password,
@@ -47,7 +46,12 @@ class AdminUsersController extends Controller
         $user->phone = $request->phone;
         $user->save();
 
-        return redirect('/admin/profiles');
+        if($request->redirect=="admin"){
+            return redirect('/admin/profiles');
+        }elseif($request->redirect=="back"){
+            return back();
+        }
+
     }
 
     public function filterByRole($role)

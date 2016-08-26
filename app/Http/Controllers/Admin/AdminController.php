@@ -17,13 +17,13 @@ class AdminController extends Controller
 
     public function addUserView($role)
     {
-        $classes = ClassYear::with('class')->get();
+        $classes = ClassYear::with('level_class')->get();
         //dd($classes);
         switch($role){
             case "teacher":
                 return view('protected.admin.add_teacher',compact('classes'));
             case "student":
-                return view('protected.admin.add_students');
+                return view('protected.admin.add_students',compact('classes'));
             case "parent":
                 return view('protected.admin.add_parent');
         }
