@@ -17,7 +17,7 @@ class AdminUsersController extends Controller
 {
     public function index()
     {
-        $users = User::all();
+        $users = User::with('role','assign.class_year.level_class.level_class')->get();
         //dd($users);
         return view('protected.admin.list_users',compact('users'));
     }
@@ -63,5 +63,11 @@ class AdminUsersController extends Controller
         $user = Sentinel::findById($request->id);
         $user->delete();
         return $request->id;
+    }
+
+    public function getPassword(Request $request)
+    {
+        $user = Sentinel::findUserById($request->id);
+        return $user->password;
     }
 }

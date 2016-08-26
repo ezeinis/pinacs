@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Sentinel;
 use App\RoleUser;
 use App\Role;
+use App\Assign;
 
 class User extends Authenticatable
 {
@@ -37,4 +38,8 @@ class User extends Authenticatable
         return $this->hasOne(RoleUser::class);
     }
 
+    public function assign()
+    {
+        return $this->hasOne(Assign::class);
+    }
 }

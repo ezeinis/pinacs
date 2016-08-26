@@ -89,15 +89,20 @@
             @foreach ($users as $user)
             <tr id="user_row_{{$user->id}}">
                 <td>{{ $loop->index }}</td>
-                <td>{{ $user->role->role_name()}}</td>
+                <td>{{ $user['role']->role_name()}}</td>
                 <td>{{ $user->last_name }} {{ $user->first_name }}</td>
                 <td><a href="profiles/{{ $user->id }}">{{ $user->email }}</a></td>
                 <td>{{ $user->phone }}</td>
-                <td>1</td>
-                <td>Pro Junior</td>
-                <td>2015-2016</td>
+                @if($user['assign']!=NULL)
+                  <td>{{$user['assign']['class_year']['level_class']->name}}</td>
+                  <td>{{$user['assign']['class_year']['level_class']['level_class']->name}}</td>
+                  <td>{{$user['assign']['class_year']->school_year}}</td>
+                @else
+                  <td>-</td>
+                  <td>-</td>
+                  <td>-</td>
+                @endif
                 <td class="list_users_action_container">
-                  <i class="fa fa-eye" data-toggle="tooltip" data-placement="top" title="" data-original-title="Show password" aria-hidden="true"></i>
                   <i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit user" aria-hidden="true"></i>
                   <i id="delete_user_{{$user->id}}" class="fa fa-trash delete_user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete user"  aria-hidden="true"></i>
                 </td>
@@ -115,6 +120,7 @@
   $(document).ready(function(){
       $('[data-toggle="tooltip"]').tooltip();
   });
+  //delete user ajax call
   $('.delete_user').on("click",function(){
     var user_id_to_delete = $(this).attr('id');
     var id = user_id_to_delete.split("_")[2];

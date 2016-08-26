@@ -26,6 +26,7 @@ Route::get('/user/store','Admin\AdminUsersController@store');
 Route::get('/admin/profiles/{role}', ['uses' => 'Admin\AdminUsersController@filterByRole']);
 Route::get('/admin/classes','Admin\AdminClassesController@index');
 Route::get('/admin/delete/user', ['uses' => 'Admin\AdminUsersController@delete']);
+Route::get('/admin/show/user/password', ['uses' => 'Admin\AdminUsersController@getPassword']);
 });
 
 //teacher routes

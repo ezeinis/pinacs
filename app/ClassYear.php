@@ -8,7 +8,7 @@ use App\Assign;
 
 class ClassYear extends Model
 {
-    public function class()
+    public function level_class()
     {
         return $this->belongsTo(LevelClass::class);
     }
