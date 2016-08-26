@@ -12,15 +12,7 @@
         </div>
         <div class="col-xs-2 text-right">
           <div class="btn-group">
-            <a aria-expanded="false" href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-            Add Level
-            <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
-            <li><a href="/admin/add/teacher">Teacher</a></li>
-            <li><a href="/admin/add/student">Student</a></li>
-            <li><a href="/admin/add/parent">Parent</a></li>
-            </ul>
+            <a href="/admin/level" class="btn btn-default">Add Level</a>
           </div>
         </div>
     </div>
@@ -105,15 +97,7 @@
         </div>
         <div class="col-xs-2 text-right">
           <div class="btn-group">
-            <a aria-expanded="false" href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-            Add Class
-            <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
-            <li><a href="/admin/add/teacher">Teacher</a></li>
-            <li><a href="/admin/add/student">Student</a></li>
-            <li><a href="/admin/add/parent">Parent</a></li>
-            </ul>
+            <a href="/admin/class" class="btn btn-default">Add Class</a>
           </div>
         </div>
     </div>
@@ -180,19 +164,23 @@
             </tr>
         </thead>
         <tbody>
-        @foreach($classes as $class)
-        <tr>
-          <td>{{$loop->index}}</td>
-          <td>{{$class['class']->name}}</td>
-          <td>{{$levels[$class['class']->parent-1]->name}}</td>
-          <td>{{$class->school_year}}</td>
-          <td>{{count($class['students'])}}</td>
-          <td>{{count($class['teachers'])}}</td>
-          <td class="list_users_action_container">
-            <i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit user" aria-hidden="true"></i>
-            <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete user"  aria-hidden="true"></i>
-          </td>
-        </tr>
+        @foreach($levels as $level)
+          @foreach($level['classes'] as $class)
+            @foreach ($class['class_year'] as $class2)
+            <tr>
+              <td>{{$loop->index}}</td>
+              <td>{{$class->name}}</td>
+              <td>{{$level->name}}</td>
+              <td>{{$class2->school_year}}</td>
+              <td>{{count($class2['students'])}}</td>
+              <td>{{count($class2['teachers'])}}</td>
+              <td class="list_users_action_container">
+                <i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit user" aria-hidden="true"></i>
+                <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete user"  aria-hidden="true"></i>
+              </td>
+            </tr>
+            @endforeach
+          @endforeach
         @endforeach
         </tbody>
     </table>

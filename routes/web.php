@@ -27,6 +27,10 @@ Route::get('/admin/profiles/{role}', ['uses' => 'Admin\AdminUsersController@filt
 Route::get('/admin/classes','Admin\AdminClassesController@index');
 Route::get('/admin/delete/user', ['uses' => 'Admin\AdminUsersController@delete']);
 Route::get('/admin/show/user/password', ['uses' => 'Admin\AdminUsersController@getPassword']);
+Route::get('/admin/class','Admin\AdminClassesController@addClassView');
+Route::get('/admin/level','Admin\AdminClassesController@addLevelView');
+Route::get('/admin/class/add','Admin\AdminClassesController@addClass');
+Route::get('/admin/level/add','Admin\AdminClassesController@addLevel');
 });
 
 //teacher routes

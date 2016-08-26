@@ -13,6 +13,11 @@ class LevelClass extends Model
         return $this->belongsTo(LevelClass::class);
     }
 
+    public function classes()
+    {
+        return $this->hasMany(LevelClass::class);
+    }
+
     public function class_year()
     {
         return $this->hasMany(ClassYear::class);
