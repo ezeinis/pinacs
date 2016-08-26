@@ -164,11 +164,12 @@
             </tr>
         </thead>
         <tbody>
+        <?php $i=0; ?>
         @foreach($levels as $level)
           @foreach($level['classes'] as $class)
             @foreach ($class['class_year'] as $class2)
             <tr>
-              <td>{{$loop->index}}</td>
+              <td>{{$i}}</td>
               <td>{{$class->name}}</td>
               <td>{{$level->name}}</td>
               <td>{{$class2->school_year}}</td>
@@ -179,6 +180,7 @@
                 <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete user"  aria-hidden="true"></i>
               </td>
             </tr>
+            <?php $i++; ?>
             @endforeach
           @endforeach
         @endforeach

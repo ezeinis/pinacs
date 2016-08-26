@@ -56,9 +56,13 @@ class AdminUsersController extends Controller
 
     public function filterByRole($role)
     {
-        $role=Role::where('slug','students')->first();
-        $role_users=RoleUser::where('role_id',$role->id)->get();
-        dd($role_users[0]);
+        $role_users = Role::where('slug',$role)->with('role_user.user')->get();
+        $target_users = [];
+        foreach($role_users[0]['role_user'] as $role_user){
+            array_push($target_users, $role_user['user']->id);
+        }
+        $users = User::with('role','assign.class_year.level_class.level_class')->whereIn('id',$target_users)->get();
+
         return view('protected.admin.list_users',compact('users'));
     }
 
