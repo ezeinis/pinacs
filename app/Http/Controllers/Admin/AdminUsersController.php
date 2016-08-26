@@ -57,4 +57,11 @@ class AdminUsersController extends Controller
         dd($role_users[0]);
         return view('protected.admin.list_users',compact('users'));
     }
+
+    public function delete(Request $request)
+    {
+        $user = Sentinel::findById($request->id);
+        $user->delete();
+        return $request->id;
+    }
 }

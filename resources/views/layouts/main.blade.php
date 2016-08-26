@@ -13,6 +13,7 @@
     <!-- Stylesheets -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/sweetalert.css">
     <link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
     <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -63,6 +64,7 @@
         </div>
     </div>
 
+    <script src="/js/sweetalert.min.js"></script>
     <script src="/js/jquery.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     @yield('js')

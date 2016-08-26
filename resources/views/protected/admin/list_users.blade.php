@@ -89,7 +89,7 @@
             @foreach ($users as $user)
             <tr id="user_row_{{$user->id}}">
                 <td>{{ $loop->index }}</td>
-                <td>{{ $user->role}}</td>
+                <td>{{ $user->role->role_name()}}</td>
                 <td>{{ $user->last_name }} {{ $user->first_name }}</td>
                 <td><a href="profiles/{{ $user->id }}">{{ $user->email }}</a></td>
                 <td>{{ $user->phone }}</td>
@@ -118,7 +118,23 @@
   $('.delete_user').on("click",function(){
     var user_id_to_delete = $(this).attr('id');
     var id = user_id_to_delete.split("_")[2];
-    alert(id);
+    swal({
+      title: "Are you sure?",
+      text: "You will not be able to recover this user!",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Yes, delete it!",
+      closeOnConfirm: false
+    },
+    function(){
+      $('#user_row_'+id).remove();
+      $.ajax({url: "/admin/delete/user", type: "GET",data:{"id":id},success: function(result){
+
+      }});
+      swal("Deleted!", "Your imaginary file has been deleted.", "success");
+    });
+
   });
 </script>
 

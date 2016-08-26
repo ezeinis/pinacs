@@ -116,7 +116,7 @@ class DatabaseSeeder extends Seeder
             'first_name' => 'Stathis',
             'last_name' => 'Zeinis',
             'phone' => '96718318',
-            'parent_to' => NULL,
+            'parent_to' => 5,
         ]);
 
         $this->command->info('Users seeded!');
