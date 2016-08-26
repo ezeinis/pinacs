@@ -46,17 +46,15 @@
     <div class="container-fluid main-container">
         <div class="sidebar">
             <ul>
-                <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'admin/profiles')===0 || strpos(Route::getCurrentRoute()->getPath(),'admin/add')===0)echo 'active'; ?> <?php if(strpos(Route::getCurrentRoute()->getPath(),'teacher')===0)echo 'hidden'; ?>">
+                <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'admin/profiles')===0 || strpos(Route::getCurrentRoute()->getPath(),'admin/add')===0)echo 'active'; ?> <?php if(strpos(Route::getCurrentRoute()->getPath(),'teacher')===0 || strpos(Route::getCurrentRoute()->getPath(),'student')===0 || strpos(Route::getCurrentRoute()->getPath(),'profile')===0)echo 'hidden'; ?>">
                     <a href="/admin/profiles"><i class="fa fa-users" aria-hidden="true"></i>Users</a>
                 </li>
-                <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'admin/classes')===0)echo 'active'; ?> <?php if(strpos(Route::getCurrentRoute()->getPath(),'teacher')===0)echo 'hidden'; ?>">
+                <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'admin/classes')===0)echo 'active'; ?> <?php if(strpos(Route::getCurrentRoute()->getPath(),'teacher')===0 || strpos(Route::getCurrentRoute()->getPath(),'student')===0 || strpos(Route::getCurrentRoute()->getPath(),'profile')===0)echo 'hidden'; ?>">
                     <a href="/admin/classes"><i class="fa fa-book" aria-hidden="true"></i>Levels - Classes</a>
                 </li>
-                <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'admin')===0)echo 'hidden'; ?>">
-                    <a href="/admin/profiles">for student</a>
-                </li>
-                <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'admin')===0)echo 'hidden'; ?>">
-                    <a href="/admin/profiles">for teacher</a>
+                <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'profile')===0 )echo 'active'; ?> <?php if(strpos(Route::getCurrentRoute()->getPath(),'admin')===0)echo 'hidden'; ?>">
+                    <a href="/profile"><i class="fa fa-user" aria-hidden="true"></i>
+                    My Profile</a>
                 </li>
             </ul>
         </div>

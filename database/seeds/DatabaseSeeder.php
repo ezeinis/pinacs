@@ -116,7 +116,7 @@ class DatabaseSeeder extends Seeder
             'first_name' => 'Stathis',
             'last_name' => 'Zeinis',
             'phone' => '96718318',
-            'parent_to' => '4',
+            'parent_to' => NULL,
         ]);
 
         $this->command->info('Users seeded!');
@@ -161,22 +161,22 @@ class DatabaseSeeder extends Seeder
         $level_class->save();
         $level_class = new LevelClass;
         $level_class->id=3;
-        $level_class->name="1";
+        $level_class->name="Pro Junior 1";
         $level_class->parent=1;
         $level_class->save();
         $level_class = new LevelClass;
         $level_class->id=4;
-        $level_class->name="2";
+        $level_class->name="Pro Junior 2";
         $level_class->parent=1;
         $level_class->save();
         $level_class = new LevelClass;
         $level_class->id=5;
-        $level_class->name="1";
+        $level_class->name="Junior 1";
         $level_class->parent=2;
         $level_class->save();
         $level_class = new LevelClass;
         $level_class->id=6;
-        $level_class->name="2";
+        $level_class->name="Junior 2";
         $level_class->parent=2;
         $level_class->save();
 

@@ -51,6 +51,7 @@ class Kernel extends HttpKernel
         'teacher' => \App\Http\Middleware\SentinelTeacher::class,
         'student' => \App\Http\Middleware\SentinelStudent::class,
         'parent' => \App\Http\Middleware\SentinelParent::class,
+        'sentauth' => \App\Http\Middleware\SentinelAuth::class,
         //
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,

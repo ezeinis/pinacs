@@ -58,14 +58,23 @@ h2{
     display:none;
 }
 
+.btn-primary{
+    background:#007cba;
+}
+
+.panel-primary > .panel-heading{
+    background-color:#007cba;
+    border-color:#007cba;
+}
+
+i{
+    cursor:pointer;
+}
+
 /*admin - list users*/
 
 .list_users_action_container{
     text-align: center;
-}
-
-.list_users_action_container i{
-    cursor:pointer;
 }
 
 .active>a{
@@ -74,4 +83,22 @@ h2{
 
 .list_user_filters{
     padding:16px!important;
+}
+
+/*add users*/
+.generate-password-btn{
+    float:right;
+}
+
+select{
+    padding: 10px;
+    background: white;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+    cursor: pointer;
+}
+
+select:focus{
+    box-shadow: none;
+    background:white;
+    box-shadow: 1px 1px 4px rgba(0,0,0,0.4);
 }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\ClassYear;
 
 class AdminController extends Controller
 {
@@ -16,9 +17,11 @@ class AdminController extends Controller
 
     public function addUserView($role)
     {
+        $classes = ClassYear::with('class')->get();
+        //dd($classes);
         switch($role){
             case "teacher":
-                return view('protected.admin.add_teacher');
+                return view('protected.admin.add_teacher',compact('classes'));
             case "student":
                 return view('protected.admin.add_students');
             case "parent":

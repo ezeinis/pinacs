@@ -11,19 +11,21 @@ use Sentinel;
 use App\User;
 use App\Role;
 use App\RoleUser;
+use App\Assign;
 
 class AdminUsersController extends Controller
 {
     public function index()
     {
         $users = User::all();
-        // dd($users[0]->role->role_name());
+        //dd($users);
         return view('protected.admin.list_users',compact('users'));
     }
 
     //store new users added by admin
     public function store(Request $request)
     {
+        //dd($request->class_list);
         $credentials = [
             'email'    => $request->email,
             'password' => $request->password,
@@ -32,8 +34,18 @@ class AdminUsersController extends Controller
         ];
         //dd($credentials);
         $user=Sentinel::registerAndActivate($credentials);
+        if($request->class_list!="-"){
+            $assign = new Assign;
+            $assign->role=$request->role;
+            $assign->class_year_id=$request->class_list;
+            $assign->user_id=$user->id;
+            $assign->save();
+        }
         $role = Sentinel::findRoleByName($request->role);
         $role->users()->attach($user);
+        $user = User::find($user->id);
+        $user->phone = $request->phone;
+        $user->save();
 
         return redirect('/admin/profiles');
     }
