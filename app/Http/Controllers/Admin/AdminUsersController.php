@@ -106,11 +106,20 @@ class AdminUsersController extends Controller
         //dd($credentials);
         $user=Sentinel::update($user,$credentials);
         //dd($request->class_year_id_before);
-        if($request->class_list!=$request->class_year_id_before){
+
+        if($request->class_year_id_before!=0 && $request->class_list!=$request->class_year_id_before){
             $assign=Assign::where('user_id',$user->id)->where('class_year_id',$request->class_year_id_before)->get();
             $assign[0]->class_year_id=$request->class_list;
             $assign[0]->save();
         }
+        if($request->class_year_id_before==0 && $request->class_list!='-'){
+            $assign = new Assign;
+            $assign->role=$request->role;
+            $assign->class_year_id=$request->class_list;
+            $assign->user_id=$user->id;
+            $assign->save();
+        }
+
         $user = User::find($user->id);
         $user->phone = $request->phone;
         $user->save();

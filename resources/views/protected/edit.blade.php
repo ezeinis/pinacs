@@ -44,10 +44,14 @@
                         <select name="class_list" form="edit_user_form" class="text-center">
                         <option value="-">-</option>
                         @foreach($classes as $class)
-                        @if($class->id==$user->assign->class_year_id)
-                        <option value="{{$class->id}}" selected>{{$class['level_class']->name}} {{$class->school_year}}</option>
+                        @if($user->assign==NULL)
+                            <option value="{{$class->id}}">{{$class['level_class']->name}} {{$class->school_year}}</option>
                         @else
-                        <option value="{{$class->id}}">{{$class['level_class']->name}} {{$class->school_year}}</option>
+                            @if($class->id==$user->assign->class_year_id)
+                            <option value="{{$class->id}}" selected>{{$class['level_class']->name}} {{$class->school_year}}</option>
+                            @else
+                            <option value="{{$class->id}}">{{$class['level_class']->name}} {{$class->school_year}}</option>
+                            @endif
                         @endif
                         @endforeach
                         </select>
@@ -55,7 +59,12 @@
                 </div>
             </div>
             <input type="hidden" name="user_id" value="{{$user->id}}">
-            <input type="hidden" name="class_year_id_before" value="{{$user->assign->class_year_id}}">
+            <input type="hidden" name="role" value="{{$user['role']->role_name()}}">
+            @if($user->assign==NULL)
+                <input type="hidden" name="class_year_id_before" value="0">
+            @else
+                <input type="hidden" name="class_year_id_before" value="{{$user->assign->class_year_id}}">
+            @endif
             <div class="form-group">
             <div class="col-xs-5 col-xs-offset-7 text-right">
                 <button type="reset" class="btn btn-default">Cancel</button>
