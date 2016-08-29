@@ -5,7 +5,7 @@
 @section('content')
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <h3 class="panel-title">Enter Level details</h3>
+        <h3 class="panel-title">Enter Class details</h3>
     </div>
     <div class="panel-body">
         <form id="new_class_form" method="GET" action="/admin/class/add">

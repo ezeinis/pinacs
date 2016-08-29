@@ -21,8 +21,11 @@ Route::group(['middleware' => 'admin'], function()
 {
 Route::get('/admin', ['as' => 'admin_dashboard', 'uses' => 'Admin\AdminController@getHome']);
 Route::resource('admin/profiles', 'Admin\AdminUsersController', ['only' => ['index', 'store']]);
+Route::get('/admin/profile/{id}','Admin\AdminUsersController@singleUserProfile');
+Route::get('/admin/profile/{id}/edit','Admin\AdminUsersController@editUserProfile');
 Route::get('/admin/add/{user_role}', ['uses' => 'Admin\AdminController@addUserView']);
 Route::get('/user/store','Admin\AdminUsersController@store');
+Route::get('/user/edit','Admin\AdminUsersController@edit');
 Route::get('/admin/profiles/{role}', ['uses' => 'Admin\AdminUsersController@filterByRole']);
 Route::get('/admin/classes','Admin\AdminClassesController@index');
 Route::get('/admin/delete/user', ['uses' => 'Admin\AdminUsersController@delete']);

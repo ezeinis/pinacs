@@ -12,6 +12,7 @@ use App\User;
 use App\Role;
 use App\RoleUser;
 use App\Assign;
+use App\ClassYear;
 
 class AdminUsersController extends Controller
 {
@@ -77,5 +78,43 @@ class AdminUsersController extends Controller
     {
         $user = Sentinel::findUserById($request->id);
         return $user->password;
+    }
+
+    public function singleUserProfile($id)
+    {
+        $user = User::where('id',$id)->get();
+        $user = $user[0];
+        return view('protected.single_user_profile',compact('user'));
+    }
+
+    public function editUserProfile($id)
+    {
+        $user = User::where('id',$id)->get();
+        $user = $user[0];
+        $classes = ClassYear::with('level_class')->get();
+        return view('protected.edit',compact('classes','user'));
+    }
+
+    public function edit(Request $request)
+    {
+        $user = Sentinel::findById($request->user_id);
+        $credentials = [
+            'email'    => $request->email,
+            'first_name' => $request->name,
+            'last_name' => $request->surname,
+        ];
+        //dd($credentials);
+        $user=Sentinel::update($user,$credentials);
+        //dd($request->class_year_id_before);
+        if($request->class_list!=$request->class_year_id_before){
+            $assign=Assign::where('user_id',$user->id)->where('class_year_id',$request->class_year_id_before)->get();
+            $assign[0]->class_year_id=$request->class_list;
+            $assign[0]->save();
+        }
+        $user = User::find($user->id);
+        $user->phone = $request->phone;
+        $user->save();
+
+        return back();
     }
 }

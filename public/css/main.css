@@ -102,3 +102,19 @@ select:focus{
     background:white;
     box-shadow: 1px 1px 4px rgba(0,0,0,0.4);
 }
+
+/*single profile*/
+
+.single_profile_container img{
+    width: 170px;
+    height:170px;
+    margin-bottom:10px;
+}
+
+.single_profile_container td{
+    padding:5px;
+}
+
+.profile_title{
+    margin-bottom:20px;
+}
