@@ -16,8 +16,8 @@ class CreateLevelClassTable extends Migration
         Schema::create('level_classes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',15);
-            $table->integer('level_class_id')->nullable()->unsigned();
-            $table->foreign('level_class_id')->references('id')->on('level_classes');
+            $table->integer('parent')->nullable()->unsigned();
+            $table->foreign('parent')->references('id')->on('level_classes');
             $table->timestamps();
         });
     }

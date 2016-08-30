@@ -24,7 +24,7 @@ class SentinelAdminUser
         }
         $user = Sentinel::getUser();
         $user = User::find($user->id);
-        if($user->role->role_name()!="Admins"){
+        if($user->roles()->first()->name!="Admins"){
             return redirect('login');
         }
         return $next($request);

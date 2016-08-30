@@ -29,7 +29,7 @@ class AuthAuthController extends Controller
             if (Sentinel::authenticate($input, $remember)) {
                 $user = Sentinel::getUser();
                 $user = User::find($user->id);
-                switch($user->role->role_name()){
+                switch($user->roles()->first()->name){
                     case "Admins":
                         return redirect()->intended('admin/profiles');
                     case "Users":

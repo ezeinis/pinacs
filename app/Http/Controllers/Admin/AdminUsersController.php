@@ -13,14 +13,19 @@ use App\Role;
 use App\RoleUser;
 use App\Assign;
 use App\ClassYear;
+use App\LevelClass;
 
 class AdminUsersController extends Controller
 {
     public function index()
     {
-        $users = User::with('role','assign.class_year.level_class.level_class')->get();
+        $users = User::with('roles','classes.level_class.level')->get();
+        $levels = LevelClass::where('parent',NULL)->get();
+        $school_years = ClassYear::groupBy('school_year')->get(['school_year']);
+        $roles=Role::get(['name']);
         //dd($users);
-        return view('protected.admin.list_users',compact('users'));
+        //dd($users[1]['classes']->first()->school_year);
+        return view('protected.admin.list_users',compact('users','levels','roles','school_years'));
     }
 
     //store new users added by admin
@@ -55,16 +60,70 @@ class AdminUsersController extends Controller
 
     }
 
-    public function filterByRole($role)
+    public function filterUsers(Request $request)
     {
-        $role_users = Role::where('slug',$role)->with('role_user.user')->get();
-        $target_users = [];
-        foreach($role_users[0]['role_user'] as $role_user){
-            array_push($target_users, $role_user['user']->id);
-        }
-        $users = User::with('role','assign.class_year.level_class.level_class')->whereIn('id',$target_users)->get();
 
-        return view('protected.admin.list_users',compact('users'));
+        $inputs = $request->except('_token');
+        $defaults = ["role"=>"all","level"=>"all","year"=>"all"];
+        $filters=array_merge($defaults,$inputs);
+        $users_query = User::with('roles','classes.level_class.level');
+        if($filters['role']!='all'){
+            $users_query=$users_query->whereHas('roles',function($users_query) use ($filters){
+                $users_query->where('name',$filters['role']);
+            });
+        }
+        if($filters['year']!='all'){
+            $users_query=$users_query->whereHas('classes',function($users_query) use ($filters){
+                $users_query->where('school_year',$filters['year']);
+            });
+        }
+        if($filters['level']!='all'){
+            $users_query=$users_query->whereHas('classes',function($users_query) use ($filters){
+                $users_query=$users_query->whereHas('level_class',function($users_query) use ($filters){
+                    $users_query=$users_query->whereHas('level',function($users_query) use ($filters){
+                        $users_query->where('name',$filters['level']);
+                    });
+                });
+            });
+        }
+        $results = $users_query->get();
+
+        return $results;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // $user = User::
+        // $inputs = $request->except('_token');
+        // $defaults = ["role"=>"all","level"=>"all","year"=>"all"];
+        // $filters=array_merge($defaults,$inputs);
+        // $query = User::with('roles.role','assign.class_year.level_class.level_class');
+
+        // if($filters['role']!="all"){
+        //     //$query->where('role.->role->name',$filters['role']);
+        //     //$query->whereHas('role',$role);
+        //     $query->whereHas('role', function ($query) use ($filters) {
+        //         $query->where('name', $filters['role']);
+        //     });
+        // }
+        // $results = $query->get();
+        // return $results;
+
     }
 
     public function delete(Request $request)

@@ -8,18 +8,20 @@ use App\ClassYear;
 
 class LevelClass extends Model
 {
-    public function level_class()
-    {
-        return $this->belongsTo(LevelClass::class);
-    }
+    protected $table = 'level_classes';
 
     public function classes()
     {
-        return $this->hasMany(LevelClass::class);
+        return $this->hasMany(ClassYear::class,'level_class_id','id');
     }
 
-    public function class_year()
+    public function level()
     {
-        return $this->hasMany(ClassYear::class);
+        return $this->belongsTo(LevelClass::class,'parent','id');
+    }
+
+    public function level_classes()
+    {
+        return $this->hasMany(LevelClass::class,'parent','id');
     }
 }

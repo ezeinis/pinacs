@@ -22,53 +22,47 @@
           </div>
         </div>
     </div>
-    <table class="table table-striped table-bordered table-hover">
+    <table id="user_table" class="table table-striped table-bordered table-hover">
         <thead>
             <tr>
               <td class="list_user_filters text-right" colspan="9">
-                <!-- filter role -->
+                <form id="filter_users_form" method="GET" action="/admin/profiles/filter">
                 <div class="btn-group">
-                  <a aria-expanded="false" href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                  Role
-                  <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a href="/admin/profiles">All <i class="fa fa-check" aria-hidden="true"></i></a></li>
-                    <li><a href="/admin/profiles/admins">Admins</a></li>
-                    <li><a href="/admin/profiles/teachers">Teachers</a></li>
-                    <li><a href="/admin/profiles/students">Students</a></li>
-                    <li><a href="/admin/profiles/parents">Parents</a></li>
-                  </ul>
+                  <label for="role_filter">Role:</label>
                 </div>
-                <!-- filter role end-->
-                <!-- filter level -->
                 <div class="btn-group">
-                  <a aria-expanded="false" href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                  Level
-                  <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a href="/admin/profiles">All <i class="fa fa-check" aria-hidden="true"></i></a></li>
-                    <li><a href="/admin/profiles/admins">Pro Junior</a></li>
-                    <li><a href="/admin/profiles/teachers">Junior</a></li>
-                    <li><a href="/admin/profiles/students">Senior</a></li>
-                  </ul>
+                  <select class="form-control user_filters" id="role_filter">
+                    <option value="all">All</option>
+                    @foreach($roles as $role)
+                      <option value="{{$role->name}}">{{$role->name}}</option>
+                    @endforeach
+                  </select>
                 </div>
-                <!-- filter level end-->
-                <!-- filter year -->
+
                 <div class="btn-group">
-                  <a aria-expanded="false" href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                  Year
-                  <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a href="/admin/profiles">All <i class="fa fa-check" aria-hidden="true"></i></a></li>
-                    <li><a href="/admin/profiles/admins">2014-2015</a></li>
-                    <li><a href="/admin/profiles/teachers">2015-2016</a></li>
-                    <li><a href="/admin/profiles/students">2016-2017</a></li>
-                  </ul>
+                  <label for="level_filter">Level:</label>
                 </div>
-                <!-- filter year end-->
+                <div class="btn-group">
+                  <select class="form-control user_filters" id="level_filter">
+                    <option value="all">All</option>
+                    @foreach($levels as $level)
+                      <option value="{{$level->name}}">{{$level->name}}</option>
+                    @endforeach
+                  </select>
+                </div>
+
+                <div class="btn-group">
+                  <label for="school_year_filter">School Year:</label>
+                </div>
+                <div class="btn-group">
+                  <select class="form-control user_filters" id="school_year_filter">
+                    <option value="all">All</option>
+                    @foreach($school_years as $school_year)
+                      <option value="{{$school_year->school_year}}">{{$school_year->school_year}}</option>
+                    @endforeach
+                  </select>
+                </div>
+                </form>
               </td>
             </tr>
         </thead>
@@ -89,14 +83,14 @@
             @foreach ($users as $user)
             <tr id="user_row_{{$user->id}}">
                 <td>{{ $loop->index }}</td>
-                <td>{{ $user['role']->role_name()}}</td>
+                <td>{{$user['roles']->first()->name}}</td>
                 <td><a href="/admin/profile/{{$user->id}}">{{ $user->last_name }} {{ $user->first_name }}</a></td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->phone }}</td>
-                @if($user['assign']!=NULL)
-                  <td>{{$user['assign']['class_year']['level_class']->name}}</td>
-                  <td>{{$user['assign']['class_year']['level_class']['level_class']->name}}</td>
-                  <td>{{$user['assign']['class_year']->school_year}}</td>
+                @if($user['classes']->first()!=NULL)
+                  <td>{{$user['classes']->first()['level_class']->name}}</td>
+                  <td>{{$user['classes']->first()['level_class']['level']->name}}</td>
+                  <td>{{$user['classes']->first()->school_year}}</td>
                 @else
                   <td>-</td>
                   <td>-</td>
@@ -108,7 +102,6 @@
                 </td>
              </tr>
             @endforeach
-
         </tbody>
     </table>
 
@@ -117,8 +110,47 @@
 @section('js')
 
 <script>
-  $(document).ready(function(){
-      $('[data-toggle="tooltip"]').tooltip();
+  $('[data-toggle="tooltip"]').tooltip();
+
+  //filter listeners
+  $('.user_filters').on("change",function(){
+    var role = $('#role_filter').val();
+    var level = $('#level_filter').val();
+    var year = $('#school_year_filter').val();
+    $.ajax({url: "/admin/profiles/filter", type: "GET",data:{"role":role,"level":level,"year":year},success: function(result){
+        $('#user_table tbody').empty();
+        $.each(result,function(index,value){
+          if(!jQuery.isEmptyObject(value['classes'])){
+            $('#user_table tbody').append("\
+            <tr id='user_row_"+value['id']+"'>\
+            <td>"+index+"</td>\
+            <td>"+value['roles'][0]['name']+"</td>\
+            <td>"+value['last_name']+" "+value['first_name']+"</td>\
+            <td>"+value['email']+"</td>\
+            <td>"+value['phone']+"</td>\
+            <td>"+value['classes'][0]['level_class']['name']+"</td>\
+            <td>"+value['classes'][0]['level_class']['level']['name']+"</td>\
+            <td>"+value['classes'][0]['school_year']+"</td>\
+            <td class='list_users_action_container'><a href='/admin/profile/"+value['id']+"/edit'><i class='fa fa-pencil' data-toggle='tooltip' data-placement='top' title='' data-original-title='Edit user' aria-hidden='true'></i></a><i id='delete_user_"+value['id']+"' class='fa fa-trash delete_user' data-toggle='tooltip' data-placement='top' title='' data-original-title='Delete user'  aria-hidden='true'></i></td>\
+            </tr>");
+           }
+          else{
+            $('#user_table tbody').append("\
+            <tr id='user_row_"+value['id']+"'>\
+            <td>"+index+"</td>\
+            <td>"+value['roles'][0]['name']+"</td>\
+            <td>"+value['last_name']+" "+value['first_name']+"</td>\
+            <td>"+value['email']+"</td>\
+            <td>"+value['phone']+"</td>\
+            <td>-</td>\
+            <td>-</td>\
+            <td>-</td>\
+            <td class='list_users_action_container'><a href='/admin/profile/"+value['id']+"/edit'><i class='fa fa-pencil' data-toggle='tooltip' data-placement='top' title='' data-original-title='Edit user' aria-hidden='true'></i></a><i id='delete_user_"+value['id']+"' class='fa fa-trash delete_user' data-toggle='tooltip' data-placement='top' title='' data-original-title='Delete user'  aria-hidden='true'></i></td>\
+            </tr>");
+            console.log(index);
+          }
+        });
+    }});
   });
   //delete user ajax call
   $('.delete_user').on("click",function(){
