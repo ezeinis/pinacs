@@ -56,7 +56,7 @@
                 <div class="row">
                 <div class="col-xs-4">
                     <div class="form-group">
-                        <select name="class_list" form="new_user_form" class="text-center">
+                        <select name="class_list" form="new_user_form" class="text-center form-control">
                         <option value="-">-</option>
                         @foreach($classes as $class)
                         <option value="{{$class->id}}">{{$class['level_class']->name}} {{$class->school_year}}</option>

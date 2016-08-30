@@ -16,7 +16,7 @@
                     </tr>
                     <tr>
                         <td><i class="fa fa-briefcase" aria-hidden="true"></i></td>
-                        <td>{{$user['role']->role_name()}}</td>
+                        <td>{{$user['roles']->first()->name}}</td>
                     </tr>
                     <tr>
                         <td><i class="fa fa-envelope" aria-hidden="true"></i></td>

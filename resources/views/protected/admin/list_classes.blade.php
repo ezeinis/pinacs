@@ -166,8 +166,8 @@
         <tbody>
         <?php $i=0; ?>
         @foreach($levels as $level)
-          @foreach($level['classes'] as $class)
-            @foreach ($class['class_year'] as $class2)
+          @foreach($level['level_classes'] as $class)
+            @foreach ($class['classes'] as $class2)
             <tr>
               <td>{{$i}}</td>
               <td>{{$class->name}}</td>

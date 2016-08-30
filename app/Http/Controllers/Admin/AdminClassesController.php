@@ -13,17 +13,17 @@ class AdminClassesController extends Controller
 {
     public function index()
     {
-        $levels = LevelClass::where('level_class_id',NULL)->with('classes.class_year.students','classes.class_year.teachers')->get();
+        $levels = LevelClass::where('parent',NULL)->with('level_classes.classes.students','level_classes.classes.teachers')->get();
         //dd($levels);
         foreach($levels as $level){
             $levels_tea_st_numbers[$level->id]['Students']=0;
             $levels_tea_st_numbers[$level->id]['Teachers']=0;
         }
         foreach($levels as $level){
-            foreach ($level['classes'] as $class) {
-                foreach ($class['class_year'] as $class2) {
-                    $levels_tea_st_numbers[$level->id]['Students']+=count($class2['students']);
-                    $levels_tea_st_numbers[$level->id]['Teachers']+=count($class2['teachers']);
+            foreach ($level['level_classes'] as $class) {
+                foreach ($class['classes'] as $class2) {
+                     $levels_tea_st_numbers[$level->id]['Students']+=$class2['students']->count();
+                     $levels_tea_st_numbers[$level->id]['Teachers']+=$class2['teachers']->count();
                 }
             }
         }

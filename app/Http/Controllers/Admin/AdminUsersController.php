@@ -39,18 +39,15 @@ class AdminUsersController extends Controller
         ];
         //dd($credentials);
         $user=Sentinel::registerAndActivate($credentials);
-        if($request->class_list!="-"){
-            $assign = new Assign;
-            $assign->role=$request->role;
-            $assign->class_year_id=$request->class_list;
-            $assign->user_id=$user->id;
-            $assign->save();
-        }
         $role = Sentinel::findRoleByName($request->role);
         $role->users()->attach($user);
         $user = User::find($user->id);
         $user->phone = $request->phone;
         $user->save();
+        if($request->class_list!="-"){
+            $class=ClassYear::find($request->class_list);
+            $user->classes()->attach($class);
+        }
 
         if($request->redirect=="admin"){
             return redirect('/admin/profiles');
@@ -141,16 +138,18 @@ class AdminUsersController extends Controller
 
     public function singleUserProfile($id)
     {
-        $user = User::where('id',$id)->get();
+        $user = User::where('id',$id)->with('roles')->get();
         $user = $user[0];
         return view('protected.single_user_profile',compact('user'));
     }
 
     public function editUserProfile($id)
     {
-        $user = User::where('id',$id)->get();
+        $user = User::where('id',$id)->with('roles','classes.level_class.level')->get();
         $user = $user[0];
+
         $classes = ClassYear::with('level_class')->get();
+        //dd($classes);
         return view('protected.edit',compact('classes','user'));
     }
 
@@ -162,26 +161,23 @@ class AdminUsersController extends Controller
             'first_name' => $request->name,
             'last_name' => $request->surname,
         ];
-        //dd($credentials);
+
         $user=Sentinel::update($user,$credentials);
-        //dd($request->class_year_id_before);
-
-        if($request->class_year_id_before!=0 && $request->class_list!=$request->class_year_id_before){
-            $assign=Assign::where('user_id',$user->id)->where('class_year_id',$request->class_year_id_before)->get();
-            $assign[0]->class_year_id=$request->class_list;
-            $assign[0]->save();
-        }
-        if($request->class_year_id_before==0 && $request->class_list!='-'){
-            $assign = new Assign;
-            $assign->role=$request->role;
-            $assign->class_year_id=$request->class_list;
-            $assign->user_id=$user->id;
-            $assign->save();
-        }
-
         $user = User::find($user->id);
         $user->phone = $request->phone;
         $user->save();
+        if($request->class_year_id_before!=0 && $request->class_list!=$request->class_year_id_before){
+            //dd("change from pivot");
+            $class=ClassYear::find($request->class_list);
+            $user->classes()->attach($class);
+            // $assign=Assign::where('user_id',$user->id)->where('class_year_id',$request->class_year_id_before)->get();
+            // $assign[0]->class_year_id=$request->class_list;
+            // $assign[0]->save();
+        }
+        if($request->class_year_id_before==0 && $request->class_list!='-'){
+            $class=ClassYear::find($request->class_list);
+            $user->classes()->attach($class);
+        }
 
         return back();
     }
