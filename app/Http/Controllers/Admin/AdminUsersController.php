@@ -59,7 +59,6 @@ class AdminUsersController extends Controller
 
     public function filterUsers(Request $request)
     {
-
         $inputs = $request->except('_token');
         $defaults = ["role"=>"all","level"=>"all","year"=>"all"];
         $filters=array_merge($defaults,$inputs);
@@ -86,41 +85,6 @@ class AdminUsersController extends Controller
         $results = $users_query->get();
 
         return $results;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // $user = User::
-        // $inputs = $request->except('_token');
-        // $defaults = ["role"=>"all","level"=>"all","year"=>"all"];
-        // $filters=array_merge($defaults,$inputs);
-        // $query = User::with('roles.role','assign.class_year.level_class.level_class');
-
-        // if($filters['role']!="all"){
-        //     //$query->where('role.->role->name',$filters['role']);
-        //     //$query->whereHas('role',$role);
-        //     $query->whereHas('role', function ($query) use ($filters) {
-        //         $query->where('name', $filters['role']);
-        //     });
-        // }
-        // $results = $query->get();
-        // return $results;
-
     }
 
     public function delete(Request $request)
@@ -167,12 +131,9 @@ class AdminUsersController extends Controller
         $user->phone = $request->phone;
         $user->save();
         if($request->class_year_id_before!=0 && $request->class_list!=$request->class_year_id_before){
-            //dd("change from pivot");
-            $class=ClassYear::find($request->class_list);
-            $user->classes()->attach($class);
-            // $assign=Assign::where('user_id',$user->id)->where('class_year_id',$request->class_year_id_before)->get();
-            // $assign[0]->class_year_id=$request->class_list;
-            // $assign[0]->save();
+            $assign=Assign::where('class_year_id',$request->class_year_id_before)->where('user_id',$user->id)->get();
+            $assign[0]->class_year_id=$request->class_list;
+            $assign[0]->save();
         }
         if($request->class_year_id_before==0 && $request->class_list!='-'){
             $class=ClassYear::find($request->class_list);
