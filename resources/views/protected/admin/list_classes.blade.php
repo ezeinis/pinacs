@@ -20,55 +20,6 @@
     <table class="table table-striped table-bordered table-hover">
         <thead>
             <tr>
-              <td class="list_user_filters text-right" colspan="9">
-                <!-- filter role -->
-                <div class="btn-group">
-                  <a aria-expanded="false" href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                  Role
-                  <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a href="/admin/profiles">All <i class="fa fa-check" aria-hidden="true"></i></a></li>
-                    <li><a href="/admin/profiles/admins">Admins</a></li>
-                    <li><a href="/admin/profiles/teachers">Teachers</a></li>
-                    <li><a href="/admin/profiles/students">Students</a></li>
-                    <li><a href="/admin/profiles/parents">Parents</a></li>
-                  </ul>
-                </div>
-                <!-- filter role end-->
-                <!-- filter level -->
-                <div class="btn-group">
-                  <a aria-expanded="false" href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                  Level
-                  <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a href="/admin/profiles">All <i class="fa fa-check" aria-hidden="true"></i></a></li>
-                    <li><a href="/admin/profiles/admins">Pro Junior</a></li>
-                    <li><a href="/admin/profiles/teachers">Junior</a></li>
-                    <li><a href="/admin/profiles/students">Senior</a></li>
-                  </ul>
-                </div>
-                <!-- filter level end-->
-                <!-- filter year -->
-                <div class="btn-group">
-                  <a aria-expanded="false" href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                  Year
-                  <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a href="/admin/profiles">All <i class="fa fa-check" aria-hidden="true"></i></a></li>
-                    <li><a href="/admin/profiles/admins">2014-2015</a></li>
-                    <li><a href="/admin/profiles/teachers">2015-2016</a></li>
-                    <li><a href="/admin/profiles/students">2016-2017</a></li>
-                  </ul>
-                </div>
-                <!-- filter year end-->
-              </td>
-            </tr>
-        </thead>
-        <thead>
-            <tr>
               <th>#</th>
               <th>Name</th>
               <th>Students</th>
@@ -102,53 +53,23 @@
         </div>
     </div>
     <!-- classes table -->
-    <table class="table table-striped table-bordered table-hover">
+    <table id="classes_table" class="table table-striped table-bordered table-hover">
         <thead>
             <tr>
               <td class="list_user_filters text-right" colspan="9">
-                <!-- filter role -->
+                <form id="filter_classes_form" method="GET" action="/admin/classes/filter">
                 <div class="btn-group">
-                  <a aria-expanded="false" href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                  Role
-                  <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a href="/admin/profiles">All <i class="fa fa-check" aria-hidden="true"></i></a></li>
-                    <li><a href="/admin/profiles/admins">Admins</a></li>
-                    <li><a href="/admin/profiles/teachers">Teachers</a></li>
-                    <li><a href="/admin/profiles/students">Students</a></li>
-                    <li><a href="/admin/profiles/parents">Parents</a></li>
-                  </ul>
+                  <label for="level_filter">Level:</label>
                 </div>
-                <!-- filter role end-->
-                <!-- filter level -->
                 <div class="btn-group">
-                  <a aria-expanded="false" href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                  Level
-                  <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a href="/admin/profiles">All <i class="fa fa-check" aria-hidden="true"></i></a></li>
-                    <li><a href="/admin/profiles/admins">Pro Junior</a></li>
-                    <li><a href="/admin/profiles/teachers">Junior</a></li>
-                    <li><a href="/admin/profiles/students">Senior</a></li>
-                  </ul>
+                  <select class="form-control user_filters" id="level_filter">
+                    <option value="all">All</option>
+                    @foreach($levels as $level)
+                      <option value="{{$level->name}}">{{$level->name}}</option>
+                    @endforeach
+                  </select>
                 </div>
-                <!-- filter level end-->
-                <!-- filter year -->
-                <div class="btn-group">
-                  <a aria-expanded="false" href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                  Year
-                  <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a href="/admin/profiles">All <i class="fa fa-check" aria-hidden="true"></i></a></li>
-                    <li><a href="/admin/profiles/admins">2014-2015</a></li>
-                    <li><a href="/admin/profiles/teachers">2015-2016</a></li>
-                    <li><a href="/admin/profiles/students">2016-2017</a></li>
-                  </ul>
-                </div>
-                <!-- filter year end-->
+                </form>
               </td>
             </tr>
         </thead>
@@ -195,6 +116,52 @@
   $(document).ready(function(){
       $('[data-toggle="tooltip"]').tooltip();
   });
+
+  //filter listeners
+  $('.user_filters').on("change",function(){
+    var level_filter = $('#level_filter').val();
+    var year = $('#school_year_filter').val();
+    $.ajax({url: "/admin/classes/filter", type: "GET",data:{"level":level_filter},success: function(result){
+        $('#classes_table tbody').empty();
+        if(level_filter=="all"){
+          var step=0;
+          $.each(result,function(index,value){
+            var level = value['name'];
+            $.each(value['level_classes'],function(index2,value2){
+              $('#classes_table tbody').append("<tr>\
+                <td>"+step+"</td>\
+                <td>"+value2['name']+"</td>\
+                <td>"+level+"</td>\
+                <td>"+value2['classes'][0]['school_year']+"</td>\
+                <td>"+value2['classes'][0]['students'].length+"</td>\
+                <td>"+value2['classes'][0]['teachers'].length+"</td>\
+                <td class='list_users_action_container'>\
+                <i class='fa fa-pencil' data-toggle='tooltip' data-placement='top' title='' data-original-title='Edit user' aria-hidden='true'></i>\
+                <i class='fa fa-trash' data-toggle='tooltip' data-placement='top' title='' data-original-title='Delete user' aria-hidden='true'></i>\
+              </td>\
+              </tr>");
+              step++;
+            });
+          });
+        }else{
+          var level = result[0]['name'];
+          $.each(result[0]['level_classes'],function(index,value){
+            $('#classes_table tbody').append("<tr>\
+            <td>"+index+"</td>\
+            <td>"+value['name']+"</td>\
+            <td>"+level+"</td>\
+            <td>"+value['classes'][0]['school_year']+"</td>\
+            <td>"+value['classes'][0]['students'].length+"</td>\
+            <td>"+value['classes'][0]['teachers'].length+"</td>\
+            <td class='list_users_action_container'>\
+                <i class='fa fa-pencil' data-toggle='tooltip' data-placement='top' title='' data-original-title='Edit user' aria-hidden='true'></i>\
+                <i class='fa fa-trash' data-toggle='tooltip' data-placement='top' title='' data-original-title='Delete user' aria-hidden='true'></i>\
+              </td>\
+            </tr>");
+          });
+        }
+      }});
+    });
 </script>
 
 @endsection

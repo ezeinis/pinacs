@@ -15,6 +15,8 @@ class AdminClassesController extends Controller
     {
         $levels = LevelClass::where('parent',NULL)->with('level_classes.classes.students','level_classes.classes.teachers')->get();
         //dd($levels);
+        $school_years = ClassYear::groupBy('school_year')->get(['school_year']);
+        //dd($levels);
         foreach($levels as $level){
             $levels_tea_st_numbers[$level->id]['Students']=0;
             $levels_tea_st_numbers[$level->id]['Teachers']=0;
@@ -27,23 +29,8 @@ class AdminClassesController extends Controller
                 }
             }
         }
-        //dd($levels_tea_st_numbers);
-        //$classes = ClassYear::with('level_class','students','teachers')->get();
-        //echo $classes[0]['class'];
-        //dd($levels);
 
-        //sunolo teacher students gia levels
-        // foreach($levels as $level){
-        //     $levels_tea_st_numbers[$class['level_class']->level_class_id]['Students']=0;
-        //     $levels_tea_st_numbers[$class['level_class']->level_class_id]['Teachers']=0;
-        // }
-        // foreach($levels as $level){
-        //     $levels_tea_st_numbers[$class['level_class']->level_class_id]['Students']+=count($class['students']);
-        //     $levels_tea_st_numbers[$class['level_class']->level_class_id]['Teachers']+=count($class['teachers']);
-        // }
-        // dd($levels_tea_st_numbers);
-
-        return view('protected.admin.list_classes',compact('levels','levels_tea_st_numbers'));
+        return view('protected.admin.list_classes',compact('levels','levels_tea_st_numbers','school_years'));
     }
 
     public function addClassView()
@@ -87,5 +74,21 @@ class AdminClassesController extends Controller
         }elseif($request->redirect=="back"){
             return back();
         }
+    }
+
+    public function filterClasses(Request $request)
+    {
+        $inputs = $request->except('_token');
+        $defaults = ["level"=>"all"];
+        $filters=array_merge($defaults,$inputs);
+
+        $levels_query = LevelClass::where('parent',NULL)->with('level_classes.classes.students','level_classes.classes.teachers');
+
+        if($filters['level']!='all'){
+            $levels_query=$levels_query->where('name',$filters['level']);
+        }
+
+        $results=$levels_query->get();
+        return $results;
     }
 }

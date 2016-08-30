@@ -27,6 +27,7 @@ Route::get('/admin/add/{user_role}', ['uses' => 'Admin\AdminController@addUserVi
 Route::get('/user/store','Admin\AdminUsersController@store');
 Route::get('/user/edit','Admin\AdminUsersController@edit');
 Route::get('/admin/profiles/filter', ['uses' => 'Admin\AdminUsersController@filterUsers']);
+Route::get('/admin/classes/filter', ['uses' => 'Admin\AdminClassesController@filterClasses']);
 Route::get('/admin/classes','Admin\AdminClassesController@index');
 Route::get('/admin/delete/user', ['uses' => 'Admin\AdminUsersController@delete']);
 Route::get('/admin/show/user/password', ['uses' => 'Admin\AdminUsersController@getPassword']);
