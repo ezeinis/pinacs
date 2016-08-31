@@ -57,6 +57,12 @@
                     <a href="/profile"><i class="fa fa-user side_links" aria-hidden="true"></i>
                     My Profile</a>
                 </li>
+                <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'student')!==0 )echo 'hidden'; ?>">
+                    <a href="/student/classes"><i class="fa fa-book side_links" aria-hidden="true"></i>My Classes</a>
+                </li>
+                <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'teacher')!==0 )echo 'hidden'; ?>">
+                    <a href="/teacher/classes"><i class="fa fa-book side_links" aria-hidden="true"></i>My Classes</a>
+                </li>
             </ul>
         </div>
         <div class="main-content">

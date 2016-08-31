@@ -58,6 +58,10 @@ h2{
     display:none;
 }
 
+.show{
+    display:block;
+}
+
 .btn-primary{
     background:#007cba;
 }

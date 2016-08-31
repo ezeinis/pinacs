@@ -43,19 +43,21 @@ Route::get('/admin/level/add','Admin\AdminClassesController@addLevel');
 Route::group(['middleware' => 'teacher'], function()
 {
     Route::get('/teacher', ['as' => 'teacher_dashboard', 'uses' => 'TeacherController@getHome']);
+    Route::get('/teacher/classes','TeacherController@showClasses');
+    Route::get('/teacher/class/{class_id}/students','TeacherController@showClassStudents')->middleware('class_belongs_to_teacher');
 });
 
 //student routes
 Route::group(['middleware' => 'student'], function()
 {
     Route::get('/student', ['as' => 'student_dashboard', 'uses' => 'StudentController@getHome']);
+    Route::get('/student/classes','StudentController@showClasses');
 });
 
 //parent routes
 Route::group(['middleware' => 'parent'], function()
 {
     Route::get('/parent', ['as' => 'parent_dashboard', 'uses' => 'ParentController@getHome']);
-
 });
 
 Route::group(['middleware' => 'sentauth'], function()
