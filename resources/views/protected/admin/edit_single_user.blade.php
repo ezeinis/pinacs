@@ -6,33 +6,37 @@
 
 @section('assign_to_class')
 
-<h4>Assign to Class</h4>
 <div class="row">
     <div class="col-xs-4">
+        <h4>Assign To Class</h4>
         <div class="form-group">
-            <select name="class_list" form="edit_user_form" class="text-center form-control">
-                <option value="-">-</option>
-                @foreach($classes as $class)
-                    @if($user['classes']->first()==NULL)
-                        <option value="{{$class->id}}">{{$class['level_class']->name}} {{$class->school_year}}</option>
+            @foreach($classes as $class)
+                <div class="checkbox">
+                    @if(in_array($class->id,$classes_assigned_array))
+                        <label><input type="checkbox" name="classes[]" value="{{$class->id}}" checked>{{$class['level_class']->name}} {{$class->school_year}}</label>
                     @else
-                    @if($class->level_class_id==$user->classes()->first()->level_class_id)
-                        <option value="{{$class->id}}" selected>{{$class['level_class']->name}} {{$class->school_year}}</option>
+                        <label><input type="checkbox" name="classes[]" value="{{$class->id}}">{{$class['level_class']->name}} {{$class->school_year}}</label>
+                    @endif
+                </div>
+            @endforeach
+        </div>
+    </div>
+    <div class="col-xs-4">
+        <h4>Role</h4>
+        <div class="form-group">
+            @foreach($roles as $role)
+                <div class="checkbox">
+                    @if(in_array($role->id,$user_roles_array))
+                        <label><input type="checkbox" name="roles[]" value="{{$role->id}}" checked>{{$role->name}}</label>
                     @else
-                        <option value="{{$class->id}}">{{$class['level_class']->name}} {{$class->school_year}}</option>
+                        <label><input type="checkbox" name="roles[]" value="{{$role->id}}">{{$role->name}}</label>
                     @endif
-                    @endif
-                @endforeach
-            </select>
+
+                </div>
+            @endforeach
         </div>
     </div>
 </div>
 <input type="hidden" name="user_id" value="{{$user->id}}">
-<input type="hidden" name="role" value="{{$user['roles']->first()->name}}">
-@if($user['classes']->first()==NULL)
-    <input type="hidden" name="class_year_id_before" value="0">
-@else
-    <input type="hidden" name="class_year_id_before" value="{{$user->classes()->first()->id}}">
-@endif
 
 @stop

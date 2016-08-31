@@ -24,7 +24,7 @@ Route::get('/admin', ['as' => 'admin_dashboard', 'uses' => 'Admin\AdminControlle
 Route::resource('admin/profiles', 'Admin\AdminUsersController', ['only' => ['index', 'store']]);
 Route::get('/admin/profiles/{id}','Admin\AdminUsersController@singleUserProfile');
 Route::get('/admin/profiles/{id}/edit','Admin\AdminUsersController@editUserProfile');
-Route::get('/admin/profiles/add/{user_role}', ['uses' => 'Admin\AdminController@addUserView']);
+Route::get('/admin/profiles/user/add', ['uses' => 'Admin\AdminController@addUserView']);
 Route::get('/user/store','Admin\AdminUsersController@store');
 Route::get('/user/edit','Admin\AdminUsersController@edit');
 Route::get('/admin/profile/filter', ['uses' => 'Admin\AdminUsersController@filterUsers']);

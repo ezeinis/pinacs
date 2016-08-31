@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\ClassYear;
+use App\Role;
 
 class AdminController extends Controller
 {
@@ -15,17 +16,10 @@ class AdminController extends Controller
         return view('protected.admin.admin_dashboard');
     }
 
-    public function addUserView($role)
+    public function addUserView()
     {
         $classes = ClassYear::with('level_class')->get();
-        //dd($classes);
-        switch($role){
-            case "teacher":
-                return view('protected.admin.add_teacher',compact('classes'));
-            case "student":
-                return view('protected.admin.add_students',compact('classes'));
-            case "parent":
-                return view('protected.admin.add_parent');
-        }
+        $roles = Role::all();
+        return view('protected.admin.add_user',compact('classes','roles'));
     }
 }

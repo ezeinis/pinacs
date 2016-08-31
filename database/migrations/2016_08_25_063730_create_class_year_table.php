@@ -18,7 +18,8 @@ class CreateClassYearTable extends Migration
             $table->integer('level_class_id')->unsigned();
             $table->foreign('level_class_id')->references('id')->on('level_classes');
             $table->string('school_year',11);
-            $table->boolean('current_year');
+            $table->date('starting');
+            $table->date('ending');
             $table->timestamps();
         });
     }

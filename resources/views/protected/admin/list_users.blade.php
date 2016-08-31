@@ -10,15 +10,7 @@
         </div>
         <div class="col-xs-2 text-right">
           <div class="btn-group">
-            <a aria-expanded="false" href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-            Add User
-            <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
-            <li><a href="/admin/profiles/add/teacher">Teacher</a></li>
-            <li><a href="/admin/profiles/add/student">Student</a></li>
-            <li><a href="/admin/profiles/add/parent">Parent</a></li>
-            </ul>
+          <a href="/admin/profiles/user/add" class="btn btn-default">Add User</a>
           </div>
         </div>
     </div>
@@ -88,9 +80,27 @@
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->phone }}</td>
                 @if($user['classes']->first()!=NULL)
-                  <td>{{$user['classes']->first()['level_class']->name}}</td>
-                  <td>{{$user['classes']->first()['level_class']['level']->name}}</td>
-                  <td>{{$user['classes']->first()->school_year}}</td>
+                  <td>{{$user['classes']->first()['level_class']->name}}
+                      @foreach($user['classes'] as $class)
+                        @if($loop->index>=1)
+                        <hr>{{$class['level_class']->name}}
+                        @endif
+                      @endforeach
+                  </td>
+                  <td>{{$user['classes']->first()['level_class']['level']->name}}
+                      @foreach($user['classes'] as $class)
+                        @if($loop->index>=1)
+                        <hr>{{$class['level_class']['level']->name}}
+                        @endif
+                      @endforeach
+                  </td>
+                  <td>{{$user['classes']->first()->school_year}}
+                      @foreach($user['classes'] as $class)
+                        @if($loop->index>=1)
+                        <hr>{{$class->school_year}}
+                        @endif
+                      @endforeach
+                  </td>
                 @else
                   <td>-</td>
                   <td>-</td>
@@ -121,7 +131,7 @@
         $('#user_table tbody').empty();
         $.each(result,function(index,value){
           if(!jQuery.isEmptyObject(value['classes'])){
-            $('#user_table tbody').append("\
+            var append_string="\
             <tr id='user_row_"+value['id']+"'>\
             <td>"+index+"</td>\
             <td>"+value['roles'][0]['name']+"</td>\
@@ -132,7 +142,8 @@
             <td>"+value['classes'][0]['level_class']['level']['name']+"</td>\
             <td>"+value['classes'][0]['school_year']+"</td>\
             <td class='list_users_action_container'><a href='/admin/profile/"+value['id']+"/edit'><i class='fa fa-pencil' data-toggle='tooltip' data-placement='top' title='' data-original-title='Edit user' aria-hidden='true'></i></a><i id='delete_user_"+value['id']+"' class='fa fa-trash delete_user' data-toggle='tooltip' data-placement='top' title='' data-original-title='Delete user'  aria-hidden='true'></i></td>\
-            </tr>");
+            </tr>"
+            $('#user_table tbody').append(append_string);
            }
           else{
             $('#user_table tbody').append("\
@@ -153,7 +164,7 @@
     }});
   });
   //delete user ajax call
-  $('.delete_user').on("click",function(){
+  $('#user_table').on("click",".delete_user",function(){
     var user_id_to_delete = $(this).attr('id');
     var id = user_id_to_delete.split("_")[2];
     swal({

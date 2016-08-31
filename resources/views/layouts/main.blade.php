@@ -46,24 +46,36 @@
 
     <div class="container-fluid main-container">
         <div class="sidebar">
-            <ul>
-                <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'admin/profiles')===0)echo 'active'; ?> <?php if(strpos(Route::getCurrentRoute()->getPath(),'teacher')===0 || strpos(Route::getCurrentRoute()->getPath(),'student')===0 || strpos(Route::getCurrentRoute()->getPath(),'profile')===0)echo 'hidden'; ?>">
-                    <a href="/admin/profiles"><i class="fa fa-users side_links" aria-hidden="true"></i>Users</a>
-                </li>
-                <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'admin/levelsclasses')===0)echo 'active'; ?> <?php if(strpos(Route::getCurrentRoute()->getPath(),'teacher')===0 || strpos(Route::getCurrentRoute()->getPath(),'student')===0 || strpos(Route::getCurrentRoute()->getPath(),'profile')===0)echo 'hidden'; ?>">
-                    <a href="/admin/levelsclasses"><i class="fa fa-book side_links" aria-hidden="true"></i>Levels - Classes</a>
-                </li>
-                <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'profile')===0 )echo 'active'; ?> <?php if(strpos(Route::getCurrentRoute()->getPath(),'admin')===0)echo 'hidden'; ?>">
-                    <a href="/profile"><i class="fa fa-user side_links" aria-hidden="true"></i>
-                    My Profile</a>
-                </li>
-                <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'student')!==0 )echo 'hidden'; ?>">
-                    <a href="/student/classes"><i class="fa fa-book side_links" aria-hidden="true"></i>My Classes</a>
-                </li>
-                <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'teacher')!==0 )echo 'hidden'; ?>">
-                    <a href="/teacher/classes"><i class="fa fa-book side_links" aria-hidden="true"></i>My Classes</a>
-                </li>
-            </ul>
+            @if(Sentinel::getUser()['roles'][0]->name=='Admins')
+                <ul>
+                    <li>
+                        <a href="/admin/profiles"><i class="fa fa-users side_links" aria-hidden="true"></i>Users</a>
+                    </li>
+                    <li>
+                        <a href="/admin/levelsclasses"><i class="fa fa-book side_links" aria-hidden="true"></i>Levels - Classes</a>
+                    </li>
+                </ul>
+            @elseif(Sentinel::getUser()['roles'][0]->name=='Teachers')
+                <ul>
+                    <li>
+                        <a href="/profile"><i class="fa fa-user side_links" aria-hidden="true"></i>
+                        My Profile</a>
+                    </li>
+                    <li>
+                        <a href="/teacher/classes"><i class="fa fa-book side_links" aria-hidden="true"></i>My Classes</a>
+                    </li>
+                </ul>
+            @elseif(Sentinel::getUser()['roles'][0]->name=='Students')
+                <ul>
+                    <li>
+                        <a href="/profile"><i class="fa fa-user side_links" aria-hidden="true"></i>
+                        My Profile</a>
+                    </li>
+                    <li>
+                        <a href="/student/classes"><i class="fa fa-book side_links" aria-hidden="true"></i>My Classes</a>
+                    </li>
+                </ul>
+            @endif
         </div>
         <div class="main-content">
           @yield('content')
