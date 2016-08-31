@@ -27,7 +27,7 @@ Route::get('/admin/profiles/{id}/edit','Admin\AdminUsersController@editUserProfi
 Route::get('/admin/profiles/add/{user_role}', ['uses' => 'Admin\AdminController@addUserView']);
 Route::get('/user/store','Admin\AdminUsersController@store');
 Route::get('/user/edit','Admin\AdminUsersController@edit');
-Route::get('/admin/profiles/filter', ['uses' => 'Admin\AdminUsersController@filterUsers']);
+Route::get('/admin/profile/filter', ['uses' => 'Admin\AdminUsersController@filterUsers']);
 Route::get('/admin/classes/filter', ['uses' => 'Admin\AdminClassesController@filterClasses']);
 
 Route::get('/admin/levelsclasses','Admin\AdminClassesController@index');

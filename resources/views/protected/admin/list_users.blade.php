@@ -117,7 +117,7 @@
     var role = $('#role_filter').val();
     var level = $('#level_filter').val();
     var year = $('#school_year_filter').val();
-    $.ajax({url: "/admin/profiles/filter", type: "GET",data:{"role":role,"level":level,"year":year},success: function(result){
+    $.ajax({url: "/admin/profile/filter", type: "GET",data:{"role":role,"level":level,"year":year},success: function(result){
         $('#user_table tbody').empty();
         $.each(result,function(index,value){
           if(!jQuery.isEmptyObject(value['classes'])){
