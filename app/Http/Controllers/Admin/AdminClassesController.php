@@ -35,7 +35,7 @@ class AdminClassesController extends Controller
 
     public function addClassView()
     {
-        $levels = LevelClass::where('level_class_id',NULL)->get();
+        $levels = LevelClass::where('parent',NULL)->get();
         return view('protected.admin.add_class',compact('levels'));
     }
 
@@ -48,7 +48,7 @@ class AdminClassesController extends Controller
     {
         $class=new LevelClass;
         $class->name=$request->class_name;
-        $class->level_class_id=$request->level_name;
+        $class->parent=$request->level_name;
         $class->save();
 
         $class_year=new ClassYear;
@@ -58,7 +58,7 @@ class AdminClassesController extends Controller
         $class_year->save();
 
         if($request->redirect=="admin"){
-            return redirect('/admin/classes');
+            return redirect('/admin/levelsclasses');
         }elseif($request->redirect=="back"){
             return back();
         }
@@ -70,7 +70,7 @@ class AdminClassesController extends Controller
         $level->name=$request->level_name;
         $level->save();
         if($request->redirect=="admin"){
-            return redirect('/admin/classes');
+            return redirect('/admin/levelsclasses');
         }elseif($request->redirect=="back"){
             return back();
         }

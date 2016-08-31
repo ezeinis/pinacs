@@ -12,7 +12,7 @@
         </div>
         <div class="col-xs-2 text-right">
           <div class="btn-group">
-            <a href="/admin/level" class="btn btn-default">Add Level</a>
+            <a href="/admin/levelsclasses/level" class="btn btn-default">Add Level</a>
           </div>
         </div>
     </div>
@@ -48,7 +48,7 @@
         </div>
         <div class="col-xs-2 text-right">
           <div class="btn-group">
-            <a href="/admin/class" class="btn btn-default">Add Class</a>
+            <a href="/admin/levelsclasses/class" class="btn btn-default">Add Class</a>
           </div>
         </div>
     </div>

@@ -15,9 +15,9 @@
             <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-            <li><a href="/admin/add/teacher">Teacher</a></li>
-            <li><a href="/admin/add/student">Student</a></li>
-            <li><a href="/admin/add/parent">Parent</a></li>
+            <li><a href="/admin/profiles/add/teacher">Teacher</a></li>
+            <li><a href="/admin/profiles/add/student">Student</a></li>
+            <li><a href="/admin/profiles/add/parent">Parent</a></li>
             </ul>
           </div>
         </div>
@@ -84,7 +84,7 @@
             <tr id="user_row_{{$user->id}}">
                 <td>{{ $loop->index }}</td>
                 <td>{{$user['roles']->first()->name}}</td>
-                <td><a href="/admin/profile/{{$user->id}}">{{ $user->last_name }} {{ $user->first_name }}</a></td>
+                <td><a href="/admin/profiles/{{$user->id}}">{{ $user->last_name }} {{ $user->first_name }}</a></td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->phone }}</td>
                 @if($user['classes']->first()!=NULL)
@@ -97,7 +97,7 @@
                   <td>-</td>
                 @endif
                 <td class="list_users_action_container">
-                  <a href="/admin/profile/{{$user->id}}/edit"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit user" aria-hidden="true"></i></a>
+                  <a href="/admin/profiles/{{$user->id}}/edit"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit user" aria-hidden="true"></i></a>
                   <i id="delete_user_{{$user->id}}" class="fa fa-trash delete_user" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete user"  aria-hidden="true"></i>
                 </td>
              </tr>
@@ -145,7 +145,7 @@
             <td>-</td>\
             <td>-</td>\
             <td>-</td>\
-            <td class='list_users_action_container'><a href='/admin/profile/"+value['id']+"/edit'><i class='fa fa-pencil' data-toggle='tooltip' data-placement='top' title='' data-original-title='Edit user' aria-hidden='true'></i></a><i id='delete_user_"+value['id']+"' class='fa fa-trash delete_user' data-toggle='tooltip' data-placement='top' title='' data-original-title='Delete user'  aria-hidden='true'></i></td>\
+            <td class='list_users_action_container'><a href='/admin/profiles/"+value['id']+"/edit'><i class='fa fa-pencil' data-toggle='tooltip' data-placement='top' title='' data-original-title='Edit user' aria-hidden='true'></i></a><i id='delete_user_"+value['id']+"' class='fa fa-trash delete_user' data-toggle='tooltip' data-placement='top' title='' data-original-title='Delete user'  aria-hidden='true'></i></td>\
             </tr>");
             console.log(index);
           }

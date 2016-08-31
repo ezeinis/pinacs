@@ -24,7 +24,7 @@ class SentinelStudent
         }
         $user = Sentinel::getUser();
         $user = User::find($user->id);
-        if($user->role->role_name()!="Students"){
+        if($user->roles()->first()->name!="Students"){
             return redirect('login');
         }
 

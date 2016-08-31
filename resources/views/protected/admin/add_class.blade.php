@@ -19,7 +19,7 @@
         </div>
         <div class="form-group col-xs-4">
             <label style="display:block" for="level_name">Level</label>
-            <select name="level_name" form="new_class_form" class="text-center">
+            <select name="level_name" form="new_class_form" class="text-center form-control">
             <option value="-">-</option>
             @foreach($levels as $level)
             <option value="{{$level->id}}">{{$level->name}}</option>
@@ -47,7 +47,7 @@
     });
     //cancel button redirect
     $('button[type="reset"]').on("click",function(){
-        window.location.href = "/admin/classes";
+        window.location.href = "/admin/levelsclasses";
     });
 </script>
 @stop

@@ -25,7 +25,7 @@ class SentinelTeacher
         $user = Sentinel::getUser();
         $user = User::find($user->id);
         //dd($user->role->role_name());
-        if($user->role->role_name()!="Teachers"){
+        if($user->roles()->first()->name!="Teachers"){
             return redirect('login');
         }
         return $next($request);

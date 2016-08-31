@@ -34,7 +34,7 @@
     });
     //cancel button redirect
     $('button[type="reset"]').on("click",function(){
-        window.location.href = "/admin/classes";
+        window.location.href = "/admin/levelsclasses";
     });
 </script>
 @stop

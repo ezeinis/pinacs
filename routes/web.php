@@ -20,19 +20,21 @@ Route::get('logout', ['as' => 'logout', 'uses' => 'AuthAuthController@logout']);
 Route::group(['middleware' => 'admin'], function()
 {
 Route::get('/admin', ['as' => 'admin_dashboard', 'uses' => 'Admin\AdminController@getHome']);
+
 Route::resource('admin/profiles', 'Admin\AdminUsersController', ['only' => ['index', 'store']]);
-Route::get('/admin/profile/{id}','Admin\AdminUsersController@singleUserProfile');
-Route::get('/admin/profile/{id}/edit','Admin\AdminUsersController@editUserProfile');
-Route::get('/admin/add/{user_role}', ['uses' => 'Admin\AdminController@addUserView']);
+Route::get('/admin/profiles/{id}','Admin\AdminUsersController@singleUserProfile');
+Route::get('/admin/profiles/{id}/edit','Admin\AdminUsersController@editUserProfile');
+Route::get('/admin/profiles/add/{user_role}', ['uses' => 'Admin\AdminController@addUserView']);
 Route::get('/user/store','Admin\AdminUsersController@store');
 Route::get('/user/edit','Admin\AdminUsersController@edit');
 Route::get('/admin/profiles/filter', ['uses' => 'Admin\AdminUsersController@filterUsers']);
 Route::get('/admin/classes/filter', ['uses' => 'Admin\AdminClassesController@filterClasses']);
-Route::get('/admin/classes','Admin\AdminClassesController@index');
+
+Route::get('/admin/levelsclasses','Admin\AdminClassesController@index');
 Route::get('/admin/delete/user', ['uses' => 'Admin\AdminUsersController@delete']);
 Route::get('/admin/show/user/password', ['uses' => 'Admin\AdminUsersController@getPassword']);
-Route::get('/admin/class','Admin\AdminClassesController@addClassView');
-Route::get('/admin/level','Admin\AdminClassesController@addLevelView');
+Route::get('/admin/levelsclasses/class','Admin\AdminClassesController@addClassView');
+Route::get('/admin/levelsclasses/level','Admin\AdminClassesController@addLevelView');
 Route::get('/admin/class/add','Admin\AdminClassesController@addClass');
 Route::get('/admin/level/add','Admin\AdminClassesController@addLevel');
 });
@@ -59,4 +61,6 @@ Route::group(['middleware' => 'parent'], function()
 Route::group(['middleware' => 'sentauth'], function()
 {
     Route::get('/profile', ['uses' => 'ProfileController@showProfile']);
+    Route::get('/profile/edit', ['uses' => 'ProfileController@editProfileView']);
+    Route::get('/edit/profile', ['uses' => 'ProfileController@editProfile']);
 });

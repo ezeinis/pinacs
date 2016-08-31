@@ -104,7 +104,7 @@ class AdminUsersController extends Controller
     {
         $user = User::where('id',$id)->with('roles')->get();
         $user = $user[0];
-        return view('protected.single_user_profile',compact('user'));
+        return view('protected.admin.single_user_profile',compact('user'));
     }
 
     public function editUserProfile($id)
@@ -114,7 +114,7 @@ class AdminUsersController extends Controller
 
         $classes = ClassYear::with('level_class')->get();
         //dd($classes);
-        return view('protected.edit',compact('classes','user'));
+        return view('protected.admin.edit_single_user',compact('classes','user'));
     }
 
     public function edit(Request $request)
