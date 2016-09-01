@@ -95,7 +95,7 @@ class AdminUsersController extends Controller
                 });
             });
         }
-        $users = $users_query->get();
+        $users = $users_query->paginate(5);
         $levels = LevelClass::where('parent',NULL)->get();
         $school_years = ClassYear::groupBy('school_year')->get(['school_year']);
         $roles=Role::get(['name']);

@@ -145,6 +145,8 @@
     </table>
     @if($filter_role==='none' && $filter_level==='none' && $filter_year==='none')
       {{ $users->links() }}
+    @else
+      {{ $users->appends(['role'=>$filter_role,'level'=>$filter_level,'year'=>$filter_year])->links() }}
     @endif
 
 @endsection
