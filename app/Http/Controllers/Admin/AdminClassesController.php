@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\LevelClass;
 use App\ClassYear;
+use App\User;
 
 class AdminClassesController extends Controller
 {
@@ -92,5 +93,35 @@ class AdminClassesController extends Controller
 
         $results=$levels_query->get();
         return $results;
+    }
+
+    public function showClassStudents($class_id)
+    {
+        $class = ClassYear::where('id',$class_id)->with('level_class')->get();
+        $class_name = $class[0]['level_class']->name;
+        //dd($class_name);
+        $students=User::whereHas('classes',function($q) use ($class_id){
+            $q->where('class_years.id',$class_id);
+        })->whereHas('roles',function($q){
+            $q->where('name','Students');
+        })->get();
+        //dd($students);
+        $role="students";
+        return view('protected.admin.students_class_list',compact('students','class_name','role'));
+    }
+
+    public function showClassTeachers($class_id)
+    {
+        $class = ClassYear::where('id',$class_id)->with('level_class')->get();
+        $class_name = $class[0]['level_class']->name;
+        //dd($class_name);
+        $students=User::whereHas('classes',function($q) use ($class_id){
+            $q->where('class_years.id',$class_id);
+        })->whereHas('roles',function($q){
+            $q->where('name','Teachers');
+        })->get();
+        //dd($students);
+        $role="teachers";
+        return view('protected.admin.students_class_list',compact('students','class_name','role'));
     }
 }
