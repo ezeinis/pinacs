@@ -79,6 +79,10 @@ a>i:not(.side_links){
     color:#666;
 }
 
+.alert{
+    padding:6px;
+}
+
 /*admin - list users*/
 
 .list_users_action_container{

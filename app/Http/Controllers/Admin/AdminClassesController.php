@@ -53,7 +53,8 @@ class AdminClassesController extends Controller
 
         $class_year=new ClassYear;
         $class_year->school_year=$request->year;
-        $class_year->current_year=1;
+        $class_year->starting=$request->starting_date;
+        $class_year->ending=$request->ending_date;
         $class_year->level_class_id=$class->id;
         $class_year->save();
 
