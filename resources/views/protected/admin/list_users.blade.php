@@ -18,15 +18,23 @@
         <thead>
             <tr>
               <td class="list_user_filters text-right" colspan="9">
-                <form id="filter_users_form" method="GET" action="/admin/profiles/filter">
+                <form id="filter_users_form" method="GET" action="/admin/profile/filter">
                 <div class="btn-group">
                   <label for="role_filter">Role:</label>
                 </div>
                 <div class="btn-group">
-                  <select class="form-control user_filters" id="role_filter">
-                    <option value="all">All</option>
+                  <select name="role" class="form-control user_filters" id="role_filter">
+                    @if($filter_role==='all')
+                        <option value="all" selected>All</option>
+                    @else
+                        <option value="all">All</option>
+                    @endif
                     @foreach($roles as $role)
-                      <option value="{{$role->name}}">{{$role->name}}</option>
+                      @if($role->name===$filter_role)
+                        <option value="{{$role->name}}" selected>{{$role->name}}</option>
+                      @else
+                        <option value="{{$role->name}}">{{$role->name}}</option>
+                      @endif
                     @endforeach
                   </select>
                 </div>
@@ -35,10 +43,18 @@
                   <label for="level_filter">Level:</label>
                 </div>
                 <div class="btn-group">
-                  <select class="form-control user_filters" id="level_filter">
-                    <option value="all">All</option>
+                  <select name="level" class="form-control user_filters" id="level_filter">
+                    @if($filter_level==='all')
+                        <option value="all" selected>All</option>
+                    @else
+                        <option value="all">All</option>
+                    @endif
                     @foreach($levels as $level)
-                      <option value="{{$level->name}}">{{$level->name}}</option>
+                      @if($level->name===$filter_level)
+                        <option value="{{$level->name}}" selected>{{$level->name}}</option>
+                      @else
+                        <option value="{{$level->name}}">{{$level->name}}</option>
+                      @endif
                     @endforeach
                   </select>
                 </div>
@@ -47,10 +63,18 @@
                   <label for="school_year_filter">School Year:</label>
                 </div>
                 <div class="btn-group">
-                  <select class="form-control user_filters" id="school_year_filter">
-                    <option value="all">All</option>
+                  <select name="year" class="form-control user_filters" id="school_year_filter">
+                    @if($filter_year==='all')
+                        <option value="all" selected>All</option>
+                    @else
+                        <option value="all">All</option>
+                    @endif
                     @foreach($school_years as $school_year)
-                      <option value="{{$school_year->school_year}}">{{$school_year->school_year}}</option>
+                      @if($school_year->school_year===$filter_year)
+                        <option value="{{$school_year->school_year}}" selected>{{$school_year->school_year}}</option>
+                      @else
+                        <option value="{{$school_year->school_year}}">{{$school_year->school_year}}</option>
+                      @endif
                     @endforeach
                   </select>
                 </div>
@@ -74,7 +98,11 @@
         <tbody>
             @foreach ($users as $user)
             <tr id="user_row_{{$user->id}}">
-                <td>{{ $loop->index }}</td>
+                @if($filter_role==='none' && $filter_level==='none' && $filter_year==='none')
+                  <td>{{ $loop->index+($users->currentPage()-1)*5 }}</td>
+                @else
+                  <td>{{ $loop->index }}</td>
+                @endif
                 <td>{{$user['roles']->first()->name}}</td>
                 <td><a href="/admin/profiles/{{$user->id}}">{{ $user->last_name }} {{ $user->first_name }}</a></td>
                 <td>{{ $user->email }}</td>
@@ -112,8 +140,12 @@
                 </td>
              </tr>
             @endforeach
+
         </tbody>
     </table>
+    @if($filter_role==='none' && $filter_level==='none' && $filter_year==='none')
+      {{ $users->links() }}
+    @endif
 
 @endsection
 
@@ -124,44 +156,7 @@
 
   //filter listeners
   $('.user_filters').on("change",function(){
-    var role = $('#role_filter').val();
-    var level = $('#level_filter').val();
-    var year = $('#school_year_filter').val();
-    $.ajax({url: "/admin/profile/filter", type: "GET",data:{"role":role,"level":level,"year":year},success: function(result){
-        $('#user_table tbody').empty();
-        $.each(result,function(index,value){
-          if(!jQuery.isEmptyObject(value['classes'])){
-            var append_string="\
-            <tr id='user_row_"+value['id']+"'>\
-            <td>"+index+"</td>\
-            <td>"+value['roles'][0]['name']+"</td>\
-            <td>"+value['last_name']+" "+value['first_name']+"</td>\
-            <td>"+value['email']+"</td>\
-            <td>"+value['phone']+"</td>\
-            <td>"+value['classes'][0]['level_class']['name']+"</td>\
-            <td>"+value['classes'][0]['level_class']['level']['name']+"</td>\
-            <td>"+value['classes'][0]['school_year']+"</td>\
-            <td class='list_users_action_container'><a href='/admin/profile/"+value['id']+"/edit'><i class='fa fa-pencil' data-toggle='tooltip' data-placement='top' title='' data-original-title='Edit user' aria-hidden='true'></i></a><i id='delete_user_"+value['id']+"' class='fa fa-trash delete_user' data-toggle='tooltip' data-placement='top' title='' data-original-title='Delete user'  aria-hidden='true'></i></td>\
-            </tr>"
-            $('#user_table tbody').append(append_string);
-           }
-          else{
-            $('#user_table tbody').append("\
-            <tr id='user_row_"+value['id']+"'>\
-            <td>"+index+"</td>\
-            <td>"+value['roles'][0]['name']+"</td>\
-            <td>"+value['last_name']+" "+value['first_name']+"</td>\
-            <td>"+value['email']+"</td>\
-            <td>"+value['phone']+"</td>\
-            <td>-</td>\
-            <td>-</td>\
-            <td>-</td>\
-            <td class='list_users_action_container'><a href='/admin/profiles/"+value['id']+"/edit'><i class='fa fa-pencil' data-toggle='tooltip' data-placement='top' title='' data-original-title='Edit user' aria-hidden='true'></i></a><i id='delete_user_"+value['id']+"' class='fa fa-trash delete_user' data-toggle='tooltip' data-placement='top' title='' data-original-title='Delete user'  aria-hidden='true'></i></td>\
-            </tr>");
-            console.log(index);
-          }
-        });
-    }});
+    $('#filter_users_form').submit();
   });
   //delete user ajax call
   $('#user_table').on("click",".delete_user",function(){

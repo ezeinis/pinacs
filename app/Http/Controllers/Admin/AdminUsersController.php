@@ -19,13 +19,16 @@ class AdminUsersController extends Controller
 {
     public function index()
     {
-        $users = User::with('roles','classes.level_class.level')->get();
+        $users = User::with('roles','classes.level_class.level')->paginate(5);
         $levels = LevelClass::where('parent',NULL)->get();
         $school_years = ClassYear::groupBy('school_year')->get(['school_year']);
         $roles=Role::get(['name']);
+        $filter_role="none";
+        $filter_year="none";
+        $filter_level="none";
         //dd($users);
         //dd($users[1]['classes']->first()->school_year);
-        return view('protected.admin.list_users',compact('users','levels','roles','school_years'));
+        return view('protected.admin.list_users',compact('users','levels','roles','school_years','filter_role','filter_year','filter_level'));
     }
 
     //store new users added by admin
@@ -71,6 +74,7 @@ class AdminUsersController extends Controller
         $inputs = $request->except('_token');
         $defaults = ["role"=>"all","level"=>"all","year"=>"all"];
         $filters=array_merge($defaults,$inputs);
+        //dd($filters);
         $users_query = User::with('roles','classes.level_class.level');
         if($filters['role']!='all'){
             $users_query=$users_query->whereHas('roles',function($users_query) use ($filters){
@@ -91,9 +95,16 @@ class AdminUsersController extends Controller
                 });
             });
         }
-        $results = $users_query->get();
+        $users = $users_query->get();
+        $levels = LevelClass::where('parent',NULL)->get();
+        $school_years = ClassYear::groupBy('school_year')->get(['school_year']);
+        $roles=Role::get(['name']);
 
-        return $results;
+        $filter_role=$request->role;
+        $filter_year=$request->year;
+        $filter_level=$request->level;
+
+        return view('protected.admin.list_users',compact('users','levels','roles','school_years','filter_role','filter_year','filter_level'));
     }
 
     public function delete(Request $request)

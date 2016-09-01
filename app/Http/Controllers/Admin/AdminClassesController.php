@@ -15,6 +15,7 @@ class AdminClassesController extends Controller
     {
         $levels = LevelClass::where('parent',NULL)->with('level_classes.classes.students','level_classes.classes.teachers')->get();
         //dd($levels);
+        //dd($levels);
         $school_years = ClassYear::groupBy('school_year')->get(['school_year']);
         //dd($levels);
         foreach($levels as $level){

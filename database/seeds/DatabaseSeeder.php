@@ -84,6 +84,15 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Sentinel::registerAndActivate([
+            'email'    => 'ezeinis11@gmail.com',
+            'password' => 'e21111991',
+            'first_name' => 'Dimitris',
+            'last_name' => 'Parpounas',
+            'phone' => '96718318',
+            'parent_to' => NULL,
+        ]);
+
+        Sentinel::registerAndActivate([
             'email'    => 'ezeinis13@gmail.com',
             'password' => 'e21111991',
             'first_name' => 'Efthimis',
@@ -111,6 +120,33 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Sentinel::registerAndActivate([
+            'email'    => 'ezeinis17@gmail.com',
+            'password' => 'e21111991',
+            'first_name' => 'Kostas',
+            'last_name' => 'Zarkadis',
+            'phone' => '96718318',
+            'parent_to' => NULL,
+        ]);
+
+        Sentinel::registerAndActivate([
+            'email'    => 'ezeinis18@gmail.com',
+            'password' => 'e21111991',
+            'first_name' => 'Panagiotis',
+            'last_name' => 'Lontogiannhs',
+            'phone' => '96718318',
+            'parent_to' => NULL,
+        ]);
+
+        Sentinel::registerAndActivate([
+            'email'    => 'ezeinis19@gmail.com',
+            'password' => 'e21111991',
+            'first_name' => 'Nikos',
+            'last_name' => 'Vandoros',
+            'phone' => '96718318',
+            'parent_to' => NULL,
+        ]);
+
+        Sentinel::registerAndActivate([
             'email'    => 'stathiszeinis@gmail.com',
             'password' => 'e21111991',
             'first_name' => 'Stathis',
@@ -127,9 +163,13 @@ class DatabaseSeeder extends Seeder
         $studentUser = Sentinel::findByCredentials(['login' => 'ezeinis13@gmail.com']);
         $studentUser2 = Sentinel::findByCredentials(['login' => 'ezeinis15@gmail.com']);
         $studentUser3 = Sentinel::findByCredentials(['login' => 'ezeinis16@gmail.com']);
+        $studentUser4 = Sentinel::findByCredentials(['login' => 'ezeinis17@gmail.com']);
+        $studentUser5 = Sentinel::findByCredentials(['login' => 'ezeinis18@gmail.com']);
+        $studentUser6 = Sentinel::findByCredentials(['login' => 'ezeinis19@gmail.com']);
         $parentUser = Sentinel::findByCredentials(['login' => 'stathiszeinis@gmail.com']);
         $teacherUser = Sentinel::findByCredentials(['login' => 'ezeinis14@gmail.com']);
         $teacherUser2 = Sentinel::findByCredentials(['login' => 'ezeinis12@gmail.com']);
+        $teacherUser3 = Sentinel::findByCredentials(['login' => 'ezeinis11@gmail.com']);
 
         $userRole = Sentinel::findRoleByName('Users');
         $adminRole = Sentinel::findRoleByName('Admins');
@@ -143,8 +183,12 @@ class DatabaseSeeder extends Seeder
         $studentRole->users()->attach($studentUser);
         $studentRole->users()->attach($studentUser2);
         $studentRole->users()->attach($studentUser3);
+        $studentRole->users()->attach($studentUser4);
+        $studentRole->users()->attach($studentUser5);
+        $studentRole->users()->attach($studentUser6);
         $teacherRole->users()->attach($teacherUser);
         $teacherRole->users()->attach($teacherUser2);
+        $teacherRole->users()->attach($teacherUser3);
         $parentRole->users()->attach($parentUser);
 
         $this->command->info('Users assigned to roles seeded!');
@@ -186,52 +230,118 @@ class DatabaseSeeder extends Seeder
         $class_year->id = 1;
         $class_year->level_class_id = 3;
         $class_year->school_year = "2015-2016";
-        $class_year->starting = '2015-08-15';
-        $class_year->ending = '2016-06-15';
+        $class_year->starting = '2015-09-15';
+        $class_year->ending = '2016-09-14';
         $class_year->save();
         $class_year = new ClassYear;
         $class_year->id = 2;
-        $class_year->level_class_id = 4;
-        $class_year->school_year = "2015-2016";
-        $class_year->starting = '2015-08-15';
-        $class_year->ending = '2016-06-15';
+        $class_year->level_class_id = 3;
+        $class_year->school_year = "2014-2015";
+        $class_year->starting = '2014-09-15';
+        $class_year->ending = '2015-09-14';
         $class_year->save();
         $class_year = new ClassYear;
         $class_year->id = 3;
-        $class_year->level_class_id = 5;
+        $class_year->level_class_id = 4;
         $class_year->school_year = "2015-2016";
-        $class_year->starting = '2015-08-15';
-        $class_year->ending = '2016-06-15';
+        $class_year->starting = '2015-09-15';
+        $class_year->ending = '2016-09-14';
         $class_year->save();
         $class_year = new ClassYear;
         $class_year->id = 4;
+        $class_year->level_class_id = 4;
+        $class_year->school_year = "2014-2015";
+        $class_year->starting = '2014-09-15';
+        $class_year->ending = '2015-09-14';
+        $class_year->save();
+        $class_year = new ClassYear;
+        $class_year->id = 5;
+        $class_year->level_class_id = 5;
+        $class_year->school_year = "2015-2016";
+        $class_year->starting = '2015-09-15';
+        $class_year->ending = '2016-09-14';
+        $class_year->save();
+        $class_year = new ClassYear;
+        $class_year->id = 6;
         $class_year->level_class_id = 6;
         $class_year->school_year = "2015-2016";
-        $class_year->starting = '2015-08-15';
-        $class_year->ending = '2016-06-15';
+        $class_year->starting = '2015-09-15';
+        $class_year->ending = '2016-09-14';
         $class_year->save();
 
         $this->command->info('class_year_seeded');
 
         $assign = new Assign;
         $assign->user_id=3;
-        $assign->class_year_id=1;
-        $assign->save();
-        $assign = new Assign;
-        $assign->user_id=4;
         $assign->class_year_id=2;
         $assign->save();
         $assign = new Assign;
-        $assign->user_id=5;
+        $assign->user_id=3;
         $assign->class_year_id=1;
         $assign->save();
         $assign = new Assign;
+        $assign->user_id=3;
+        $assign->class_year_id=5;
+        $assign->save();
+        $assign = new Assign;
+        $assign->user_id=4;
+        $assign->class_year_id=4;
+        $assign->save();
+        $assign = new Assign;
+        $assign->user_id=4;
+        $assign->class_year_id=3;
+        $assign->save();
+        $assign = new Assign;
+        $assign->user_id=4;
+        $assign->class_year_id=6;
+        $assign->save();
+        $assign = new Assign;
         $assign->user_id=6;
-        $assign->class_year_id=1;
+        $assign->class_year_id=2;
+        $assign->save();
+        $assign = new Assign;
+        $assign->user_id=6;
+        $assign->class_year_id=5;
         $assign->save();
         $assign = new Assign;
         $assign->user_id=7;
         $assign->class_year_id=2;
+        $assign->save();
+        $assign = new Assign;
+        $assign->user_id=7;
+        $assign->class_year_id=5;
+        $assign->save();
+        $assign = new Assign;
+        $assign->user_id=8;
+        $assign->class_year_id=2;
+        $assign->save();
+        $assign = new Assign;
+        $assign->user_id=8;
+        $assign->class_year_id=5;
+        $assign->save();
+        $assign = new Assign;
+        $assign->user_id=9;
+        $assign->class_year_id=4;
+        $assign->save();
+        $assign = new Assign;
+        $assign->user_id=9;
+        $assign->class_year_id=6;
+        $assign->save();
+        $assign = new Assign;
+        $assign->user_id=10;
+        $assign->class_year_id=4;
+        $assign->save();
+        $assign = new Assign;
+        $assign->user_id=10;
+        $assign->class_year_id=6;
+        $assign->save();
+        $assign = new Assign;
+        $assign->user_id=11;
+        $assign->class_year_id=4;
+        $assign->save();
+        $assign = new Assign;
+        $assign->user_id=11;
+        $assign->class_year_id=6;
         $assign->save();
 
         $this->command->info('assigns seeded');

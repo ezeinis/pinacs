@@ -83,6 +83,10 @@ a>i:not(.side_links){
     padding:6px;
 }
 
+.pagination{
+    float:right;
+}
+
 /*admin - list users*/
 
 .list_users_action_container{
