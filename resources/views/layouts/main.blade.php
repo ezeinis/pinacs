@@ -48,30 +48,30 @@
         <div class="sidebar">
             @if(Sentinel::getUser()['roles'][0]->name=='Admins')
                 <ul>
-                    <li>
+                    <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'admin/profiles')===0)echo 'active'; ?>">
                         <a href="/admin/profiles"><i class="fa fa-users side_links" aria-hidden="true"></i>Users</a>
                     </li>
-                    <li>
+                    <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'admin/levelsclasses')===0)echo 'active'; ?>">
                         <a href="/admin/levelsclasses"><i class="fa fa-book side_links" aria-hidden="true"></i>Levels - Classes</a>
                     </li>
                 </ul>
             @elseif(Sentinel::getUser()['roles'][0]->name=='Teachers')
                 <ul>
-                    <li>
+                    <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'profile')===0)echo 'active'; ?>">
                         <a href="/profile"><i class="fa fa-user side_links" aria-hidden="true"></i>
                         My Profile</a>
                     </li>
-                    <li>
+                    <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'teacher/classes')===0)echo 'active'; ?>">
                         <a href="/teacher/classes"><i class="fa fa-book side_links" aria-hidden="true"></i>My Classes</a>
                     </li>
                 </ul>
             @elseif(Sentinel::getUser()['roles'][0]->name=='Students')
                 <ul>
-                    <li>
+                    <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'profile')===0)echo 'active'; ?>">
                         <a href="/profile"><i class="fa fa-user side_links" aria-hidden="true"></i>
                         My Profile</a>
                     </li>
-                    <li>
+                    <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'student/classes')===0)echo 'active'; ?>">
                         <a href="/student/classes"><i class="fa fa-book side_links" aria-hidden="true"></i>My Classes</a>
                     </li>
                 </ul>

@@ -31,8 +31,11 @@ Route::get('/admin/profile/filter', ['uses' => 'Admin\AdminUsersController@filte
 Route::get('/admin/classes/filter', ['uses' => 'Admin\AdminClassesController@filterClasses']);
 
 Route::get('/admin/levelsclasses','Admin\AdminClassesController@index');
-Route::get('/admin/class/{id}/students','Admin\AdminClassesController@showClassStudents');
-Route::get('/admin/class/{id}/teachers','Admin\AdminClassesController@showClassTeachers');
+Route::get('/admin/levelsclasses/class/{id}/students','Admin\AdminClassesController@showClassStudents');
+Route::get('/admin/levelsclasses/class/{id}/teachers','Admin\AdminClassesController@showClassTeachers');
+Route::get('/admin/levelsclasses/level/{id}/students','Admin\AdminClassesController@showLevelStudents');
+Route::get('/admin/levelsclasses/level/{id}/teachers','Admin\AdminClassesController@showLevelTeachers');
+
 Route::get('/admin/delete/user', ['uses' => 'Admin\AdminUsersController@delete']);
 Route::get('/admin/show/user/password', ['uses' => 'Admin\AdminUsersController@getPassword']);
 Route::get('/admin/levelsclasses/class','Admin\AdminClassesController@addClassView');
@@ -46,7 +49,7 @@ Route::group(['middleware' => 'teacher'], function()
 {
     Route::get('/teacher', ['as' => 'teacher_dashboard', 'uses' => 'TeacherController@getHome']);
     Route::get('/teacher/classes','TeacherController@showClasses');
-    Route::get('/teacher/class/{class_id}/students','TeacherController@showClassStudents')->middleware('class_belongs_to_teacher');
+    Route::get('/teacher/classes/{class_id}/students','TeacherController@showClassStudents')->middleware('class_belongs_to_teacher');
 });
 
 //student routes

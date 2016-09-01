@@ -32,8 +32,8 @@
         <tr>
           <td>{{$loop->index}}</td>
           <td>{{$level->name}}</td>
-          <td>{{$levels_tea_st_numbers[$level->id]['Students']}}</td>
-          <td>{{$levels_tea_st_numbers[$level->id]['Teachers']}}</td>
+          <td><a href="/admin/levelsclasses/level/{{$level->id}}/students">{{$levels_tea_st_numbers[$level->id]['Students']}}</a></td>
+          <td><a href="/admin/levelsclasses/level/{{$level->id}}/teachers">{{$levels_tea_st_numbers[$level->id]['Teachers']}}</a></td>
           <td class="list_users_action_container">
             <i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit user" aria-hidden="true"></i>
             <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete user"  aria-hidden="true"></i>
@@ -94,8 +94,8 @@
               <td>{{$class->name}}</td>
               <td>{{$level->name}}</td>
               <td>{{$class2->school_year}}</td>
-              <td><a href="/admin/class/{{$class2->id}}/students">{{count($class2['students'])}}</a></td>
-              <td><a href="/admin/class/{{$class2->id}}/teachers">{{count($class2['teachers'])}}</a></td>
+              <td><a href="/admin/levelsclasses/class/{{$class2->id}}/students">{{count($class2['students'])}}</a></td>
+              <td><a href="/admin/levelsclasses/class/{{$class2->id}}/teachers">{{count($class2['teachers'])}}</a></td>
               <td class="list_users_action_container">
                 <i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit user" aria-hidden="true"></i>
                 <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete user"  aria-hidden="true"></i>

@@ -124,4 +124,38 @@ class AdminClassesController extends Controller
         $role="teachers";
         return view('protected.admin.students_class_list',compact('students','class_name','role'));
     }
+
+    public function showLevelStudents($level_id)
+    {
+        $level = LevelClass::where('id',$level_id)->get();
+        $class_name=$level[0]->name;
+        $students=User::whereHas('classes',function($q) use ($level_id){
+            $q->whereHas('level_class',function($q2) use ($level_id){
+                $q2->where('parent',$level_id);
+            });
+        })->whereHas('roles',function($q){
+            $q->where('name','Students');
+        })->get();
+        //dd($students);
+        $role="students";
+
+        return view('protected.admin.students_class_list',compact('students','class_name','role'));
+    }
+
+    public function showLevelTeachers($level_id)
+    {
+        $level = LevelClass::where('id',$level_id)->get();
+        $class_name=$level[0]->name;
+        $students=User::whereHas('classes',function($q) use ($level_id){
+            $q->whereHas('level_class',function($q2) use ($level_id){
+                $q2->where('parent',$level_id);
+            });
+        })->whereHas('roles',function($q){
+            $q->where('name','Teachers');
+        })->get();
+        //dd($students);
+        $role="teachers";
+
+        return view('protected.admin.students_class_list',compact('students','class_name','role'));
+    }
 }

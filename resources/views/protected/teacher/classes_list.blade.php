@@ -23,7 +23,7 @@
             <td>{{$class['level_class']->name}}</td>
             <td>{{$class['level_class']['level']->name}}</td>
             <td>{{$class->school_year}}</td>
-            <td><a href="/teacher/class/{{$class->id}}/students">{{count($class['students'])}}</a></td>
+            <td><a href="/teacher/classes/{{$class->id}}/students">{{count($class['students'])}}</a></td>
         </tr>
         @endforeach
     </tbody>
