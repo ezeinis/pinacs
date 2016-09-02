@@ -135,3 +135,12 @@ select{
 .profile_title{
     margin-bottom:20px;
 }
+
+/*teacher homeworks*/
+#homeworks_container{
+    margin-top: 20px;
+}
+
+.no-padding-right{
+    padding-right: 0px;
+}

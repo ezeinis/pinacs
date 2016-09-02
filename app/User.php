@@ -12,6 +12,7 @@ use App\Assign;
 use App\ClassYear;
 use App\Homework;
 use App\Grade;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -44,6 +45,12 @@ class User extends Authenticatable
     public function classes()
     {
         return $this->belongsToMany(ClassYear::class,'assigns','user_id','class_year_id');
+    }
+
+    public function current_class()
+    {
+        $current_date = Carbon::today();
+        return $this->belongsToMany(ClassYear::class,'assigns','user_id','class_year_id')->where('starting','<=',$current_date)->where('ending','>=',$current_date);
     }
 
     public function homeworks_created()

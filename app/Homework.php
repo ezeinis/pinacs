@@ -17,6 +17,6 @@ class Homework extends Model
 
     public function assigned_to()
     {
-        return $this->belongsToMany(ClassYear::class,'homework_class_years','homework_id','class_year_id');
+        return $this->belongsToMany(ClassYear::class,'homework_class_years','homework_id','class_year_id')->withPivot('id','start_date','due_date');
     }
 }

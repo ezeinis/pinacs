@@ -50,7 +50,12 @@ Route::group(['middleware' => 'teacher'], function()
     Route::get('/teacher', ['as' => 'teacher_dashboard', 'uses' => 'TeacherController@getHome']);
     Route::get('/teacher/classes','TeacherController@showClasses');
     Route::get('/teacher/classes/{class_id}/students','TeacherController@showClassStudents')->middleware('class_belongs_to_teacher');
-    Route::get('/teacher/homeworks','TeacherController@showHomeworks');
+
+    Route::get('/teacher/homeworks/{class_index}','TeacherController@showHomeworks');
+    Route::get('/teacher/homeworks/{class_index}/edit/{homework_id}','TeacherController@editHomeworkView');
+    Route::get('/teacher/homework/edit','TeacherController@editHomework');
+    Route::get('/teacher/homeworks/add/new','TeacherController@addHomeworkView');
+    Route::get('/teacher/homework/add','TeacherController@addHomework');
 });
 
 //student routes
