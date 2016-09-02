@@ -62,7 +62,10 @@
                         My Profile</a>
                     </li>
                     <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'teacher/classes')===0)echo 'active'; ?>">
-                        <a href="/teacher/classes"><i class="fa fa-book side_links" aria-hidden="true"></i>My Classes</a>
+                        <a href="/teacher/classes"><i class="fa fa-users side_links" aria-hidden="true"></i>My Classes</a>
+                    </li>
+                    <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'teacher/homeworks')===0)echo 'active'; ?>">
+                        <a href="/teacher/homeworks"><i class="fa fa-book side_links" aria-hidden="true"></i>Homeworks</a>
                     </li>
                 </ul>
             @elseif(Sentinel::getUser()['roles'][0]->name=='Students')
@@ -72,7 +75,10 @@
                         My Profile</a>
                     </li>
                     <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'student/classes')===0)echo 'active'; ?>">
-                        <a href="/student/classes"><i class="fa fa-book side_links" aria-hidden="true"></i>My Classes</a>
+                        <a href="/student/classes"><i class="fa fa-users side_links" aria-hidden="true"></i>My Classes</a>
+                    </li>
+                    <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'student/homeworks')===0)echo 'active'; ?>">
+                        <a href="/student/homeworks"><i class="fa fa-book side_links" aria-hidden="true"></i>Homeworks</a>
                     </li>
                 </ul>
             @endif

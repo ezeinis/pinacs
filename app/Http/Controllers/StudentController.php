@@ -22,4 +22,11 @@ class StudentController extends Controller
 
         return view('protected.student.classes_list',compact('user'));
     }
+
+    public function showHomeworks()
+    {
+        $user = Sentinel::getUser();
+        $user=User::where('id',$user->id)->get();
+        $user=$user[0];
+    }
 }

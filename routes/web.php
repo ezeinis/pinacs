@@ -50,6 +50,7 @@ Route::group(['middleware' => 'teacher'], function()
     Route::get('/teacher', ['as' => 'teacher_dashboard', 'uses' => 'TeacherController@getHome']);
     Route::get('/teacher/classes','TeacherController@showClasses');
     Route::get('/teacher/classes/{class_id}/students','TeacherController@showClassStudents')->middleware('class_belongs_to_teacher');
+    Route::get('/teacher/homeworks','TeacherController@showHomeworks');
 });
 
 //student routes
@@ -57,6 +58,7 @@ Route::group(['middleware' => 'student'], function()
 {
     Route::get('/student', ['as' => 'student_dashboard', 'uses' => 'StudentController@getHome']);
     Route::get('/student/classes','StudentController@showClasses');
+    Route::get('/student/homeworks','StudentController@showHomeworks');
 });
 
 //parent routes

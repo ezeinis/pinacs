@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\LevelClass;
 use App\Assign;
+use App\Homework;
 
 class ClassYear extends Model
 {
@@ -32,5 +33,10 @@ class ClassYear extends Model
     public function level_class()
     {
         return $this->belongsTo(LevelClass::class,'level_class_id','id');
+    }
+
+    public function homeworks()
+    {
+        return $this->belongsToMany(Homework::class,'homework_class_years','class_year_id','homework_id');
     }
 }

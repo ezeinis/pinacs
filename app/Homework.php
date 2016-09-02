@@ -12,11 +12,11 @@ class Homework extends Model
 
     public function teacher()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'user_id','id');
     }
 
     public function assigned_to()
     {
-        return $this->belongsToMany(ClassYear::class);
+        return $this->belongsToMany(ClassYear::class,'homework_class_years','homework_id','class_year_id');
     }
 }
