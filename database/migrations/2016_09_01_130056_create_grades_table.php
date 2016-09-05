@@ -24,6 +24,7 @@ class CreateGradesTable extends Migration
             $table->integer('class_year_id')->unsigned();
             $table->foreign('class_year_id')->references('id')->on('class_years')->onDelete('cascade');
             $table->float('grade');
+            $table->text('comment')->nullable();
             //$table->foreign('user_id')->references('user_id')->on('role_users');
             $table->timestamps();
         });

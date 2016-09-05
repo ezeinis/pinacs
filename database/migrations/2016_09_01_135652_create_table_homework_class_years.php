@@ -21,6 +21,7 @@ class CreateTableHomeworkClassYears extends Migration
             $table->foreign('homework_id')->references('id')->on('homeworks')->onDelete('cascade');
             $table->dateTime('start_date');
             $table->dateTime('due_date');
+            $table->string('state',10);
 
             $table->timestamps();
         });

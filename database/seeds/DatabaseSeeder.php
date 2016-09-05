@@ -382,6 +382,7 @@ class DatabaseSeeder extends Seeder
         $h_c->homework_id=1;
         $h_c->start_date = '2015-01-13 00:00:00';
         $h_c->due_date = '2015-01-20 00:00:00';
+        $h_c->state="active";
         $h_c->save();
         $h_c = new HomeworkClassYear;
         $h_c->id=2;
@@ -389,6 +390,7 @@ class DatabaseSeeder extends Seeder
         $h_c->homework_id=2;
         $h_c->start_date = '2015-01-13 00:00:00';
         $h_c->due_date = '2015-01-20 00:00:00';
+        $h_c->state="active";
         $h_c->save();
         $h_c = new HomeworkClassYear;
         $h_c->id=3;
@@ -396,6 +398,7 @@ class DatabaseSeeder extends Seeder
         $h_c->homework_id=3;
         $h_c->start_date = '2016-01-13 00:00:00';
         $h_c->due_date = '2016-01-20 00:00:00';
+        $h_c->state="active";
         $h_c->save();
         $h_c = new HomeworkClassYear;
         $h_c->id=4;
@@ -403,6 +406,7 @@ class DatabaseSeeder extends Seeder
         $h_c->homework_id=4;
         $h_c->start_date = '2016-01-13 00:00:00';
         $h_c->due_date = '2016-01-20 00:00:00';
+        $h_c->state="active";
         $h_c->save();
 
         $this->command->info('homeworks classes years seeded');

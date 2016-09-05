@@ -37,8 +37,33 @@
                         <div class="col-xs-2">
                             Due date: {{explode(' ',$homework->pivot->due_date)[0]}}
                         </div>
-                        <div class="col-xs-6 text-right">
-                            <a href="/teacher/homeworks/{{$class_index}}/edit/{{$homework->pivot->id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                        <div class="col-xs-3">
+
+                        </div>
+                        <div class="col-xs-2 text-right">
+                            @if($homework->pivot->state==='active')
+                                <div class="btn-group">
+                                <a class="btn btn-success">Active</a>
+                                <a aria-expanded="false" href="#" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/teacher/homework/state/{{$homework->pivot->id}}/inactive">Inactive</a></li>
+                                </ul>
+                                </div>
+                            @else
+                                <div class="btn-group">
+                                <a class="btn btn-warning">Inactive</a>
+                                <a aria-expanded="false" href="#" class="btn btn-warning dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/teacher/homework/state/{{$homework->pivot->id}}/active">Active</a></li>
+                                </ul>
+                                </div>
+                            @endif
+
+                        </div>
+                        <div class="col-xs-1 text-center">
+                            <a href="/teacher/homeworks/{{$homework->pivot->id}}/grades"><i class="fa fa-users" data-toggle="tooltip" data-placement="top" title="" data-original-title="Student grades" aria-hidden="true"></i></a>
+                            <a href="/teacher/homeworks/{{$class_index}}/edit/{{$homework->pivot->id}}"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit" aria-hidden="true"></i></a>
+                            <a href=""><i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete" aria-hidden="true"></i></a>
                         </div>
                     </div>
                 </div>
@@ -60,6 +85,7 @@
 @section('js')
 
     <script type="text/javascript">
+        $('[data-toggle="tooltip"]').tooltip();
         // on change class selection
         $('#class_selection').on('change',function(){
             var val=-1;

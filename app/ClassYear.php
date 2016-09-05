@@ -37,6 +37,6 @@ class ClassYear extends Model
 
     public function homeworks()
     {
-        return $this->belongsToMany(Homework::class,'homework_class_years','class_year_id','homework_id')->withPivot('id','start_date','due_date');
+        return $this->belongsToMany(Homework::class,'homework_class_years','class_year_id','homework_id')->withPivot('id','start_date','due_date','state');
     }
 }

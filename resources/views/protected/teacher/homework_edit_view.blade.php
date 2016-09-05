@@ -23,6 +23,22 @@
             </div>
         </div>
         <div class="form-group">
+            <div class="row">
+                <div class="col-xs-2">
+                    <label class="control-label" for="">State</label>
+                </div>
+                <div class="col-xs-8">
+                    @if($homework->state==='active')
+                        <label class="radio-inline"><input type="radio" name="state" value="active" checked>Active</label>
+                        <label class="radio-inline"><input type="radio" name="state" value="inactive">Inactive</label>
+                    @else
+                        <label class="radio-inline"><input type="radio" name="state" value="active">Active</label>
+                        <label class="radio-inline"><input type="radio" name="state" value="inactive" checked>Inactive</label>
+                    @endif
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
             <textarea name="text">{{$homework['homework']->text}}</textarea>
         </div>
         <input type="hidden" name="id" value="{{$homework->id}}">

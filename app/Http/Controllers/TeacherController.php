@@ -7,6 +7,7 @@ use Sentinel;
 use App\User;
 use App\ClassYear;
 use App\Homework;
+use App\Grade;
 use App\HomeworkClassYear;
 use App\Http\Requests;
 
@@ -68,6 +69,7 @@ class TeacherController extends Controller
         $homework=HomeworkClassYear::where('id',$request->id)->with('homework')->get()[0];
         $homework->start_date=$request->starting_date;
         $homework->due_date=$request->ending_date;
+        $homework->state=$request->state;
         $homework->save();
         $homework['homework']->text=$request->text;
         $homework['homework']->save();
@@ -100,8 +102,70 @@ class TeacherController extends Controller
         $homework_class_year->class_year_id=$request->class;
         $homework_class_year->start_date=$request->starting_date;
         $homework_class_year->due_date=$request->ending_date;
+        $homework_class_year->state=$request->state;
         $homework_class_year->save();
 
         return redirect('/teacher/homeworks/0');
+    }
+
+    public function changeHomeworkState($id,$state)
+    {
+        $homework=HomeworkClassYear::where('id',$id)->with('homework')->get()[0];
+        $homework->state=$state;
+        $homework->save();
+        return back();
+    }
+
+    public function showHomeworkGradesView($homework_id)
+    {
+        $homework_class_year = HomeworkClassYear::where('id',$homework_id)->with('class_year.students.student_homeworks_grades','homework')->get()[0];
+        $students = $homework_class_year['class_year']['students'];
+        //dd($students);
+        $students_grades=null;
+        $students_comments=null;
+        foreach ($students as $student_key => $student_value) {
+            //dd($student_value['student_homeworks_grades']);
+            foreach ($student_value['student_homeworks_grades'] as $homework_key => $homework_value) {
+                if($homework_value->homework_id===$homework_class_year['homework']->id){
+                    $students_grades[$student_value->id]=$homework_value->grade;
+                    $students_comments[$student_value->id]=$homework_value->comment;
+                }
+            }
+            //dd($students_grades);
+            //$students_grades[$key]=;
+        }
+        //dd($students_grades);
+        return view('protected.teacher.grades_students_homework',compact('homework_id','students','students_grades','students_comments'));
+    }
+
+    public function storeGrades(Request $request)
+    {
+        $homework_class_year = HomeworkClassYear::where('id',$request->homework_id)->with('homework','class_year.students')->get()[0];
+        $homework = $homework_class_year['homework'];
+        //dd($homework);
+        $class_year = $homework_class_year['class_year'];
+
+        foreach ($request->grade as $key => $value) {
+            if($value!==''){
+                $grade = Grade::where('homework_id',$homework->id)->where('student_id',$key)->get();
+
+                if(!$grade){
+                    $grade = new Grade;
+                    $grade->homework_id=$request->homework_id;
+                    $grade->student_id=$key;
+                    $grade->teacher_id=$homework->user_id;
+                    $grade->class_year_id=$class_year->id;
+                    $grade->grade=$value;
+                    $grade->comment=$request->comment[$key];
+                    $grade->save();
+                }else{
+                    $grade[0]->grade=$value;
+                    $grade[0]->comment=$request->comment[$key];
+                    $grade[0]->save();
+                }
+
+            }
+        }
+        return back();
     }
 }

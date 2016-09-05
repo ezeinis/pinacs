@@ -56,6 +56,9 @@ Route::group(['middleware' => 'teacher'], function()
     Route::get('/teacher/homework/edit','TeacherController@editHomework');
     Route::get('/teacher/homeworks/add/new','TeacherController@addHomeworkView');
     Route::get('/teacher/homework/add','TeacherController@addHomework');
+    Route::get('/teacher/homework/state/{id}/{state}','TeacherController@changeHomeworkState');
+    Route::get('/teacher/homeworks/{homework_id}/grades','TeacherController@showHomeworkGradesView');
+    Route::get('/teacher/homeworks/grades/store','TeacherController@storeGrades');
 });
 
 //student routes
