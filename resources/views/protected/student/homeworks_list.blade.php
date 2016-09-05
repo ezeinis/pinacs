@@ -22,13 +22,34 @@
                                     Due date: {{explode(' ',$homework->pivot->due_date)[0]}}
                                 </div>
                                 <div class="col-xs-2 col-xs-offset-6 text-right">
-                                    Grade: -
+                                    @if($grades)
+                                        @if(array_key_exists($homework->pivot->homework_id,$grades))
+                                            Grade: {{$grades[$homework->id]}}
+                                        @else
+                                            Grade: -
+                                        @endif
+                                    @else
+                                        Grade: -
+                                    @endif
                                 </div>
                             </div>
                         </div>
                         <div class="panel-body">
                             {!! $homework->text !!}
                         </div>
+                        @if($comments)
+                            @if(array_key_exists($homework->pivot->homework_id,$comments))
+                                @if($comments[$homework->id])
+                                    <div class="panel-footer">
+                                        Comments: {{$comments[$homework->id]}}
+                                    </div>
+                                @else
+                                    <div class="panel-footer">
+                                        Comments: -
+                                    </div>
+                                @endif
+                            @endif
+                        @endif
                     </div>
                 </div>
             </div>

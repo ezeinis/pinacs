@@ -156,11 +156,19 @@ class TeacherController extends Controller
                     $grade->teacher_id=$homework->user_id;
                     $grade->class_year_id=$class_year->id;
                     $grade->grade=$value;
-                    $grade->comment=$request->comment[$key];
+                    if($request->comment[$key]==''){
+                        $grade->comment=null;
+                    }else{
+                        $grade->comment=$request->comment[$key];
+                    }
                     $grade->save();
                 }else{
                     $grade[0]->grade=$value;
-                    $grade[0]->comment=$request->comment[$key];
+                    if($request->comment[$key]==''){
+                        $grade[0]->comment=null;
+                    }else{
+                        $grade[0]->comment=$request->comment[$key];
+                    }
                     $grade[0]->save();
                 }
 

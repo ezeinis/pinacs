@@ -27,14 +27,21 @@ class StudentController extends Controller
     {
         //get user
         $user = Sentinel::getUser();
-        $user=User::where('id',$user->id)->with('current_class.level_class','current_class.homeworks')->get();
+        $user=User::where('id',$user->id)->with('current_class.level_class','current_class.homeworks','student_homeworks_grades')->get();
         $user=$user[0];
         //get current class
         //dd($user);
         $current_class=$user['current_class'][0]['level_class'];
         //get homeworks
         $homeworks=$user['current_class'][0]['homeworks'];
-
-        return view('protected.student.homeworks_list',compact('current_class','homeworks'));
+        $grades=null;
+        $comments=null;
+        foreach ($user['student_homeworks_grades'] as $key => $value) {
+            //dd($value);
+            $grades[$value->homework_id]=$value->grade;
+            $comments[$value->homework_id]=$value->comment;
+        }
+        //dd($grades);
+        return view('protected.student.homeworks_list',compact('current_class','homeworks','grades','comments'));
     }
 }
