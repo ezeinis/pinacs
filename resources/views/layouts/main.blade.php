@@ -81,6 +81,20 @@
                         <a href="/student/homeworks"><i class="fa fa-book side_links" aria-hidden="true"></i>Homeworks</a>
                     </li>
                 </ul>
+            @elseif(Sentinel::getUser()['roles'][0]->name=='Parents')
+                <ul>
+                    <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'profile')===0)echo 'active'; ?>">
+                        <a href="/profile"><i class="fa fa-user side_links" aria-hidden="true"></i>
+                        My Profile</a>
+                    </li>
+                    <?php  $user=Sentinel::getUser();
+                    $user=App\User::where('id',$user->id)->with('child')->get()[0];
+                    ?>
+                    <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'parent/grades')===0)echo 'active'; ?>">
+                    <a href="/parent/grades/{{$user['child']->id}}"><i class="fa fa-book side_links" aria-hidden="true"></i>
+                    {{$user['child']->first_name}} grades</a>
+                    </li>
+                </ul>
             @endif
         </div>
         <div class="main-content">

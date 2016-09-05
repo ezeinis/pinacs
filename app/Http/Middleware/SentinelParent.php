@@ -24,7 +24,7 @@ class SentinelParent
         }
         $user = Sentinel::getUser();
         $user = User::find($user->id);
-        if($user->role->role_name()!="Parents"){
+        if($user->roles()->first()->name!="Parents"){
             return redirect('login');
         }
 

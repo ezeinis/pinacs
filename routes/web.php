@@ -73,6 +73,8 @@ Route::group(['middleware' => 'student'], function()
 Route::group(['middleware' => 'parent'], function()
 {
     Route::get('/parent', ['as' => 'parent_dashboard', 'uses' => 'ParentController@getHome']);
+    Route::get('/parent/grades/{user_id}', 'ParentController@showChildClasses');
+    Route::get('/parent/grades/{user_id}/class/{class_id}', 'ParentController@showChildGrades');
 });
 
 Route::group(['middleware' => 'sentauth'], function()

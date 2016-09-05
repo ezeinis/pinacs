@@ -62,5 +62,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Grade::class,'student_id','id');
     }
+
+    public function child()
+    {
+        return $this->hasOne(User::class,'id','parent_to');
+    }
 }
 
