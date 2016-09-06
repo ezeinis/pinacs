@@ -25,8 +25,6 @@
 
     <header>
 
-
-
 <nav class="navbar navbar-default">
   <div class="container-fluid">
 
@@ -40,8 +38,6 @@
   </div>
 </nav>
 
-
-
     </header>
 
     <div class="container-fluid main-container">
@@ -53,6 +49,9 @@
                     </li>
                     <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'admin/levelsclasses')===0)echo 'active'; ?>">
                         <a href="/admin/levelsclasses"><i class="fa fa-book side_links" aria-hidden="true"></i>Levels - Classes</a>
+                    </li>
+                    <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'admin/homeworks')===0)echo 'active'; ?>">
+                        <a href="/admin/homeworks/0"><i class="fa fa-briefcase side_links" aria-hidden="true"></i>Homeworks</a>
                     </li>
                 </ul>
             @elseif(Sentinel::getUser()['roles'][0]->name=='Teachers')

@@ -42,6 +42,15 @@ Route::get('/admin/levelsclasses/class','Admin\AdminClassesController@addClassVi
 Route::get('/admin/levelsclasses/level','Admin\AdminClassesController@addLevelView');
 Route::get('/admin/class/add','Admin\AdminClassesController@addClass');
 Route::get('/admin/level/add','Admin\AdminClassesController@addLevel');
+//homeworks
+Route::get('/admin/homeworks/{class_index}','Admin\AdminHomeworksController@showHomeworks');
+Route::get('/admin/homeworks/{class_index}/edit/{homework_id}','Admin\AdminHomeworksController@editHomeworkView');
+Route::get('/admin/homework/edit','Admin\AdminHomeworksController@editHomework');
+Route::get('/admin/homework/state/{id}/{state}','Admin\AdminHomeworksController@changeHomeworkState');
+Route::get('/admin/homeworks/add/new','Admin\AdminHomeworksController@addHomeworkView');
+Route::get('/admin/homework/add','Admin\AdminHomeworksController@addHomework');
+Route::get('/admin/homeworks/{homework_id}/grades','Admin\AdminHomeworksController@showHomeworkGradesView');
+Route::get('/admin/homeworks/grades/store','Admin\AdminHomeworksController@storeGrades');
 });
 
 //teacher routes
