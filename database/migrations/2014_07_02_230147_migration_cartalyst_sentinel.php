@@ -89,6 +89,7 @@ class MigrationCartalystSentinel extends Migration
         });
 
         Schema::create('role_users', function (Blueprint $table) {
+            $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('role_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
@@ -96,7 +97,6 @@ class MigrationCartalystSentinel extends Migration
             $table->nullableTimestamps();
 
             $table->engine = 'InnoDB';
-            $table->primary(['user_id','role_id']);
         });
 
         Schema::create('throttle', function (Blueprint $table) {

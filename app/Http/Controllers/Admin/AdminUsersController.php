@@ -34,7 +34,7 @@ class AdminUsersController extends Controller
     //store new users added by admin
     public function store(Request $request)
     {
-        // dd($request->roles);
+
         $credentials = [
             'email'    => $request->email,
             'password' => $request->password,
@@ -44,6 +44,13 @@ class AdminUsersController extends Controller
         $user=Sentinel::registerAndActivate($credentials);
         $user = User::find($user->id);
         $user->phone = $request->phone;
+        //pros to paron mono ena paidi exei o goneas
+        if($request->parent_selection!=null){
+            foreach ($request->parent_selection as $child_id) {
+                //dd($request->parent_selection);
+                $user->parent_to=$child_id;
+            }
+        }
         $user->save();
         if($request->roles!=NULL){
             foreach($request->roles as $r){
@@ -129,22 +136,27 @@ class AdminUsersController extends Controller
 
     public function editUserProfile($id)
     {
-        $user = User::where('id',$id)->with('roles','classes.level_class.level')->get();
+        $user = User::where('id',$id)->with('roles','classes.level_class.level','child')->get();
         $user = $user[0];
         $user_roles_array=[];
         foreach($user['roles'] as $role){
             array_push($user_roles_array, $role->id);
         }
         $classes_assigned_array=[];
-        //dd($user['classes']);
         foreach($user['classes'] as $class){
             array_push($classes_assigned_array, $class->id);
         }
-        //dd($user_roles_array);
         $roles = Role::all();
         $classes = ClassYear::with('level_class')->get();
-        //dd($classes);
-        return view('protected.admin.edit_single_user',compact('classes','user','roles','user_roles_array','classes_assigned_array'));
+        //4 einai to id tou role parents
+        $users=User::all();
+        if(in_array(4, $user_roles_array)){
+            $child_id=$user['child']->id;
+        }else{
+            $child_id=0;
+        }
+        //dd($child_id);
+        return view('protected.admin.edit_single_user',compact('classes','user','roles','user_roles_array','classes_assigned_array','users','child_id'));
     }
 
     public function edit(Request $request)
@@ -159,8 +171,18 @@ class AdminUsersController extends Controller
         $user=Sentinel::update($user,$credentials);
         $user = User::find($user->id);
         $user->phone = $request->phone;
+        if($request->parent_selection!=null){
+            foreach ($request->parent_selection as $child_id) {
+                //dd($request->parent_selection);
+                $user->parent_to=$child_id;
+            }
+        }
         $user->save();
         if($request->classes!=NULL){
+            $assigns=Assign::where('user_id',$user->id)->get();
+            foreach ($assigns as $assign) {
+                $assign->delete();
+            }
             foreach($request->classes as $c){
                 $class=ClassYear::find($c);
                 $assign=Assign::where('class_year_id',$class->id)->where('user_id',$user->id)->get();
@@ -169,7 +191,20 @@ class AdminUsersController extends Controller
                 }
             }
         }
+        // if($request->roles!=NULL){
+        //     foreach($request->roles as $r){
+        //         $role=Role::find($r);
+        //         $role_user=RoleUser::where('role_id',$role->id)->where('user_id',$user->id)->get();
+        //         if($role_user->first()==null){
+        //             $role->users()->attach($user);
+        //         }
+        //     }
+        // }
         if($request->roles!=NULL){
+            $role_user=RoleUser::where('user_id',$user->id)->get();
+            foreach ($role_user as $role) {
+                $role->delete();
+            }
             foreach($request->roles as $r){
                 $role=Role::find($r);
                 $role_user=RoleUser::where('role_id',$role->id)->where('user_id',$user->id)->get();
@@ -178,15 +213,6 @@ class AdminUsersController extends Controller
                 }
             }
         }
-        // if($request->class_year_id_before!=0 && $request->class_list!=$request->class_year_id_before){
-        //     $assign=Assign::where('class_year_id',$request->class_year_id_before)->where('user_id',$user->id)->get();
-        //     $assign[0]->class_year_id=$request->class_list;
-        //     $assign[0]->save();
-        // }
-        // if($request->class_year_id_before==0 && $request->class_list!='-'){
-        //     $class=ClassYear::find($request->class_list);
-        //     $user->classes()->attach($class);
-        // }
 
         return redirect('/admin/profiles');
     }

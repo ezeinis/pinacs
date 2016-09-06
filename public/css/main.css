@@ -87,6 +87,10 @@ a>i:not(.side_links){
     float:right;
 }
 
+.select2-container{
+    width:100%!important;
+}
+
 /*admin - list users*/
 
 .list_users_action_container{

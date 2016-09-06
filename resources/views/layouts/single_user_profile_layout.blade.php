@@ -26,6 +26,12 @@
                         <td><i class="fa fa-phone" aria-hidden="true"></i></td>
                         <td>{{$user->phone}}</td>
                     </tr>
+                    @if($user->child!=null)
+                        <tr>
+                            <td><i class="fa fa-child" aria-hidden="true"></i></td>
+                            <td>{{$user->child->last_name}} {{$user->child->first_name}}</td>
+                        </tr>
+                    @endif
                 </table>
             </div>
             <div class="col-xs-9">

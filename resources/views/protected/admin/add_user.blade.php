@@ -1,5 +1,9 @@
 @extends('layouts.main')
 
+@section('head')
+    <link rel="stylesheet" type="text/css" href="/css/select2.min.css">
+@stop
+
 @section('content')
     <div class="panel panel-primary">
         <div class="panel-heading">
@@ -68,11 +72,19 @@
                     <h4>Role</h4>
                     <div class="form-group">
                         @foreach($roles as $role)
-                            <div class="checkbox">
+                            <div id="role_checkbox" class="checkbox">
                                 <label><input type="checkbox" name="roles[]" value="{{$role->id}}">{{$role->name}}</label>
                             </div>
                         @endforeach
                     </div>
+                </div>
+                <div id="parent_to_col" class="col-xs-4 hidden">
+                    <h4>Parent To Student</h4>
+                    <select name="parent_selection[]" class="parent-to-selection" multiple="multiple">
+                        @foreach($users as $user)
+                            <option value="{{$user->id}}">{{$user->last_name}} {{$user->first_name}}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
 
@@ -90,11 +102,25 @@
 @stop
 
 @section('js')
-
+<script src="/js/select2.min.js"></script>
 <script>
   $(document).ready(function(){
       $('[data-toggle="tooltip"]').tooltip();
+      $(".parent-to-selection").select2();
   });
+  //on role parent select
+  $('#role_checkbox input').on('change',function(){
+    var val = $(this).val();
+    if(val==4){
+        if($(this).is(':checked')){
+            $('#parent_to_col').removeClass('hidden');
+        }else{
+            $('#parent_to_col').addClass('hidden');
+        }
+    }
+    // console.log(val);
+  });
+
   //save and new button
   $('.btn-success').on("click",function(){
         $('#redirect').val("back");
