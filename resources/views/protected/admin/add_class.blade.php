@@ -31,7 +31,7 @@
             </select>
         </div>
         <div class="col-xs-4">
-            <label class="control-label">Starting Date</label>
+            <label class="control-label">Starting Date (yyyy-09-15)</label>
             <div class="input-group date" id="" data-date="2015-09-15" data-date-format="yyyy-mm-dd">
                 <input id="starting_date" name="starting_date" class="form-control" data-date-format="yyyy-mm-dd" type="text" readonly="" value="2015-06-15" required>
                 <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i>
@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="col-xs-4">
-            <label class="control-label">Ending Date</label>
+            <label class="control-label">Ending Date  (yyyy-09-14)</label>
             <div class="input-group date" id="dp3" data-date="2015-06-15" data-date-format="yyyy-mm-dd">
                 <input id="ending_date" name="ending_date" class="form-control" type="text" data-date-format="yyyy-mm-dd" readonly="" value="2015-06-15" required>
                 <span class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i>

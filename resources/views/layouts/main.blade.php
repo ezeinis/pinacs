@@ -53,6 +53,9 @@
                     <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'admin/homeworks')===0)echo 'active'; ?>">
                         <a href="/admin/homeworks/0"><i class="fa fa-briefcase side_links" aria-hidden="true"></i>Homeworks</a>
                     </li>
+                    <li class="<?php if(strpos(Route::getCurrentRoute()->getPath(),'admin/transfer')===0)echo 'active'; ?>">
+                        <a href="/admin/transfer/students/0"><i class="fa fa-exchange side_links" aria-hidden="true"></i>Transfer Students</a>
+                    </li>
                 </ul>
             @elseif(Sentinel::getUser()['roles'][0]->name=='Teachers')
                 <ul>
