@@ -2,6 +2,7 @@
 
 @section('content')
 
+@if($homeworks_for_first_class!=null)
 <div class="row">
     <div class="col-xs-3">
         <h4>Current classes</h4>
@@ -79,7 +80,11 @@
         </div>
      @endforeach
 </div>
-
+@else
+    <div class="row">
+        Currently you are not teaching at any class
+    </div>
+@endif
 @stop
 
 @section('js')

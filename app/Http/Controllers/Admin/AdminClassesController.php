@@ -158,4 +158,42 @@ class AdminClassesController extends Controller
 
         return view('protected.admin.students_class_list',compact('students','class_name','role'));
     }
+
+    public function editClass(Request $request)
+    {
+        $class_year = ClassYear::where('id',$request->class_id)->with('level_class.level')->get()[0];
+        //dd($class_year);
+        $class_year->school_year=$request->year;
+        $class_year->starting=$request->starting_date;
+        $class_year->ending=$request->ending_date;
+        $class_year->save();
+
+        $class_year['level_class']->name=$request->class_name;
+        $class_year['level_class']->parent=$request->level_name;
+        $class_year['level_class']->save();
+
+        return redirect('/admin/levelsclasses');
+    }
+
+    public function editClassView($class_id)
+    {
+        $class = ClassYear::where('id',$class_id)->with('level_class.level')->get()[0];
+        $levels = LevelClass::where('parent',NULL)->get();
+        return view('protected.admin.edit_class',compact('class','levels','class_id'));
+    }
+
+    public function editLevelView($level_id)
+    {
+        $level = LevelClass::where('id',$level_id)->get()[0];
+        $level_name=$level->name;
+        return view('protected.admin.edit_level',compact('level_id','level_name'));
+    }
+
+    public function editLevel(Request $request)
+    {
+        $level = LevelClass::where('id',$request->level_id)->get()[0];
+        $level->name=$request->level_name;
+        $level->save();
+        return redirect('/admin/levelsclasses');
+    }
 }

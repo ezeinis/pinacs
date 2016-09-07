@@ -35,7 +35,7 @@
           <td><a href="/admin/levelsclasses/level/{{$level->id}}/students">{{$levels_tea_st_numbers[$level->id]['Students']}}</a></td>
           <td><a href="/admin/levelsclasses/level/{{$level->id}}/teachers">{{$levels_tea_st_numbers[$level->id]['Teachers']}}</a></td>
           <td class="list_users_action_container">
-            <i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit user" aria-hidden="true"></i>
+            <a href="/admin/levelsclasses/level/{{$level->id}}/edit"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit level" aria-hidden="true"></i></a>
             <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete user"  aria-hidden="true"></i>
           </td>
         </tr>
@@ -97,7 +97,7 @@
               <td><a href="/admin/levelsclasses/class/{{$class2->id}}/students">{{count($class2['students'])}}</a></td>
               <td><a href="/admin/levelsclasses/class/{{$class2->id}}/teachers">{{count($class2['teachers'])}}</a></td>
               <td class="list_users_action_container">
-                <i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit user" aria-hidden="true"></i>
+                <a href="/admin/levelsclasses/class/{{$class2->id}}/edit"><i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit class" aria-hidden="true"></i></a>
                 <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete user"  aria-hidden="true"></i>
               </td>
             </tr>

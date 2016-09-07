@@ -38,10 +38,16 @@ Route::group(['middleware' => 'admin'], function()
 
     Route::get('/admin/delete/user', ['uses' => 'Admin\AdminUsersController@delete']);
     Route::get('/admin/show/user/password', ['uses' => 'Admin\AdminUsersController@getPassword']);
+    //levels - classes
     Route::get('/admin/levelsclasses/class','Admin\AdminClassesController@addClassView');
     Route::get('/admin/levelsclasses/level','Admin\AdminClassesController@addLevelView');
     Route::get('/admin/class/add','Admin\AdminClassesController@addClass');
     Route::get('/admin/level/add','Admin\AdminClassesController@addLevel');
+    Route::get('/admin/levelsclasses/class/{class_id}/edit','Admin\AdminClassesController@editClassView');
+    Route::get('/admin/levelsclasses/level','Admin\AdminClassesController@addLevelView');
+    Route::get('/admin/levelsclasses/level/{level_id}/edit','Admin\AdminClassesController@editLevelView');
+    Route::get('/admin/class/edit','Admin\AdminClassesController@editClass');
+    Route::get('/admin/level/edit','Admin\AdminClassesController@editLevel');
     //homeworks
     Route::get('/admin/homeworks/{class_index}','Admin\AdminHomeworksController@showHomeworks');
     Route::get('/admin/homeworks/{class_index}/edit/{homework_id}','Admin\AdminHomeworksController@editHomeworkView');

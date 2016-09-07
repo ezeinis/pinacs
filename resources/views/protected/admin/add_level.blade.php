@@ -11,7 +11,7 @@
         <form method="GET" action="/admin/level/add">
         <div class="form-group col-xs-4">
             <label for="level_name">Name</label>
-            <input type="text" class="form-control" id="level_name" name="level_name">
+            <input type="text" class="form-control" id="level_name" name="level_name" required>
         </div>
         <input type="hidden" class="form-control" id="redirect" name="redirect" value="admin">
         <div class="form-group">

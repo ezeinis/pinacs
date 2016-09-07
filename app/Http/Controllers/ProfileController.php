@@ -14,7 +14,8 @@ class ProfileController extends Controller
     public function showProfile()
     {
         $user = Sentinel::getUser();
-
+        $user=User::find($user->id);
+        //dd($user->child);
         return view('protected.user.single_user_profile',compact('user'));
     }
 

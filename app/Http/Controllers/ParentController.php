@@ -25,8 +25,11 @@ class ParentController extends Controller
     public function showChildGrades($child_id,$class_id)
     {
         $user = User::where('id',$child_id)->get()[0];
+        //dd($user);
         $class = ClassYear::where('id',$class_id)->with('homeworks','level_class')->get()[0];
+        //dd($user);
         $homeworks=$class['homeworks'];
+        //dd($user);
         $grades=null;
         $comments=null;
         foreach ($user['student_homeworks_grades'] as $key => $value) {
@@ -34,6 +37,7 @@ class ParentController extends Controller
             $grades[$value->homework_id]=$value->grade;
             $comments[$value->homework_id]=$value->comment;
         }
+
         return view('protected.parent.child_class_grades_list',compact('user','class','homeworks','grades','comments'));
     }
 }

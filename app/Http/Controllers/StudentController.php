@@ -31,9 +31,16 @@ class StudentController extends Controller
         $user=$user[0];
         //get current class
         //dd($user);
-        $current_class=$user['current_class'][0]['level_class'];
-        //get homeworks
-        $homeworks=$user['current_class'][0]['homeworks'];
+        if(!empty($user['current_class'][0])){
+            $current_class=$user['current_class'][0]['level_class'];
+            //get homeworks
+            $homeworks=$user['current_class'][0]['homeworks'];
+        }else{
+            $current_class=null;
+            //get homeworks
+            $homeworks=null;
+        }
+        //dd($homeworks);
         $grades=null;
         $comments=null;
         foreach ($user['student_homeworks_grades'] as $key => $value) {

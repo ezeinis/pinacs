@@ -34,7 +34,9 @@ class AdminUsersController extends Controller
     //store new users added by admin
     public function store(Request $request)
     {
-
+        if($request->roles==NULL){
+            return back()->withErrors('You have to select at least one role for the user!');;
+        }
         $credentials = [
             'email'    => $request->email,
             'password' => $request->password,
@@ -131,16 +133,18 @@ class AdminUsersController extends Controller
     {
         $user = User::where('id',$id)->with('roles')->get();
         $user = $user[0];
+        //dd($user);
         return view('protected.admin.single_user_profile',compact('user'));
     }
 
     public function editUserProfile($id)
     {
         $user = User::where('id',$id)->with('roles','classes.level_class.level','child')->get();
+        //dd($user);
         $user = $user[0];
         $user_roles_array=[];
         foreach($user['roles'] as $role){
-            array_push($user_roles_array, $role->id);
+            array_push($user_roles_array, $role->name);
         }
         $classes_assigned_array=[];
         foreach($user['classes'] as $class){
@@ -150,26 +154,22 @@ class AdminUsersController extends Controller
         $classes = ClassYear::with('level_class')->get();
         //4 einai to id tou role parents
         $users=User::all();
-        if(in_array(4, $user_roles_array)){
+        if(in_array("Parents", $user_roles_array)){
             $child_id=$user['child']->id;
         }else{
             $child_id=0;
         }
-        //dd($child_id);
+        //dd($user);
         return view('protected.admin.edit_single_user',compact('classes','user','roles','user_roles_array','classes_assigned_array','users','child_id'));
     }
 
     public function edit(Request $request)
     {
-        $user = Sentinel::findById($request->user_id);
-        $credentials = [
-            'email'    => $request->email,
-            'first_name' => $request->name,
-            'last_name' => $request->surname,
-        ];
-
-        $user=Sentinel::update($user,$credentials);
-        $user = User::find($user->id);
+        $user = User::find($request->user_id);
+        //dd($user);
+        $user->email=$request->email;
+        $user->first_name=$request->name;
+        $user->last_name=$request->surname;
         $user->phone = $request->phone;
         if($request->parent_selection!=null){
             foreach ($request->parent_selection as $child_id) {
@@ -178,6 +178,7 @@ class AdminUsersController extends Controller
             }
         }
         $user->save();
+        //dd($user);
         if($request->classes!=NULL){
             $assigns=Assign::where('user_id',$user->id)->get();
             foreach ($assigns as $assign) {

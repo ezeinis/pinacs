@@ -2,6 +2,7 @@
 
 @section('content')
 
+@if($homeworks!=null)
 <div class="row">
     <div class="col-xs-12">
         <h4>Homeworks {{$current_class->name}}</h4>
@@ -56,5 +57,10 @@
         @endif
     @endforeach
 </div>
+@else
+    <div class="row">
+        No homeworks
+    </div>
+@endif
 
 @stop

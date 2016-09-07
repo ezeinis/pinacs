@@ -5,6 +5,11 @@
 @stop
 
 @section('content')
+    @if($errors->any())
+    <div class="alert alert-dismissible alert-danger">
+        <div><p style="margin:0;padding:0;">{{$errors->first()}}</p><button type="button" class="close" data-dismiss="alert">&times;</button></div>
+    </div>
+    @endif
     <div class="panel panel-primary">
         <div class="panel-heading">
             <h3 class="panel-title">Enter @yield('panel_title') details</h3>
@@ -73,7 +78,7 @@
                     <div class="form-group">
                         @foreach($roles as $role)
                             <div id="role_checkbox" class="checkbox">
-                                <label><input type="checkbox" name="roles[]" value="{{$role->id}}">{{$role->name}}</label>
+                                <label><input data-role="{{$role->name}}" type="checkbox" name="roles[]" value="{{$role->id}}">{{$role->name}}</label>
                             </div>
                         @endforeach
                     </div>
@@ -110,15 +115,15 @@
   });
   //on role parent select
   $('#role_checkbox input').on('change',function(){
-    var val = $(this).val();
-    if(val==4){
+    var val = $(this).attr("data-role");
+    if(val=="Parents"){
         if($(this).is(':checked')){
             $('#parent_to_col').removeClass('hidden');
         }else{
             $('#parent_to_col').addClass('hidden');
         }
     }
-    // console.log(val);
+    console.log(val);
   });
 
   //save and new button

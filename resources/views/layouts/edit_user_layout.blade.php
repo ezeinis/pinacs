@@ -37,7 +37,7 @@
                     </div>
                 </div>
             </div>
-            @yield('assign_to_class')
+
             <div class="form-group">
             <div class="col-xs-5 col-xs-offset-7 text-right">
                 <button type="reset" class="btn btn-default">Cancel</button>

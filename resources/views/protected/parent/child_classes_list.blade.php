@@ -19,8 +19,12 @@
         @foreach($student['classes'] as $class)
             <tr>
                 <td>{{$loop->index}}</td>
-                @if($class['level_class']->id==$student['current_class'][0]->id)
-                    <td><a href="/parent/grades/{{$student->id}}/class/{{$class->id}}">{{$class['level_class']->name}} (current)</a></td>
+                @if(!empty($student['current_class'][0]))
+                    @if($class['level_class']->id==$student['current_class'][0]->id)
+                        <td><a href="/parent/grades/{{$student->id}}/class/{{$class->id}}">{{$class['level_class']->name}} (current)</a></td>
+                    @else
+                        <td><a href="/parent/grades/{{$student->id}}/class/{{$class->id}}">{{$class['level_class']->name}}</a></td>
+                    @endif
                 @else
                     <td><a href="/parent/grades/{{$student->id}}/class/{{$class->id}}">{{$class['level_class']->name}}</a></td>
                 @endif

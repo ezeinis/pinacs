@@ -14,6 +14,7 @@ class LevelClass extends Model
     public function classes()
     {
         $current_date = Carbon::today();
+        $current_date="2017-09-07 00:00:00.000000";
         return $this->hasMany(ClassYear::class,'level_class_id','id')->where('starting','<=',$current_date)->where('ending','>=',$current_date);
     }
 

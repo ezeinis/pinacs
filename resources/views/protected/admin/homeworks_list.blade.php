@@ -2,6 +2,7 @@
 
 @section('content')
 
+@if(!empty($current_classes_teached[0]))
 <div class="row">
     <div class="col-xs-3">
         <h4>Current classes</h4>
@@ -79,6 +80,11 @@
         </div>
      @endforeach
 </div>
+@else
+    <div class="row">
+        No homeworks registered
+    </div>
+@endif
 
 @stop
 

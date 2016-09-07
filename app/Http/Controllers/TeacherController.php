@@ -51,8 +51,12 @@ class TeacherController extends Controller
         //dd($user);
         $current_classes_teaching=$user['current_class'];
         //get homeworks
-        $homeworks_for_first_class=$user['current_class'][$class_index]['homeworks'];
-        //dd($user);
+        if(empty($current_classes_teaching[0])){
+            $homeworks_for_first_class=null;
+        }else{
+            $homeworks_for_first_class=$user['current_class'][$class_index]['homeworks'];
+        }
+
         return view('protected.teacher.homeworks_list',compact('current_classes_teaching','homeworks_for_first_class','class_index'));
     }
 
@@ -142,14 +146,14 @@ class TeacherController extends Controller
     {
         $homework_class_year = HomeworkClassYear::where('id',$request->homework_id)->with('homework','class_year.students')->get()[0];
         $homework = $homework_class_year['homework'];
-        //dd($homework);
+
         $class_year = $homework_class_year['class_year'];
 
         foreach ($request->grade as $key => $value) {
             if($value!==''){
                 $grade = Grade::where('homework_id',$homework->id)->where('student_id',$key)->get();
-
-                if(!$grade){
+                //dd($grade);
+                if(empty($grade[0])){
                     $grade = new Grade;
                     $grade->homework_id=$request->homework_id;
                     $grade->student_id=$key;
@@ -163,7 +167,9 @@ class TeacherController extends Controller
                     }
                     $grade->save();
                 }else{
+
                     $grade[0]->grade=$value;
+
                     if($request->comment[$key]==''){
                         $grade[0]->comment=null;
                     }else{
