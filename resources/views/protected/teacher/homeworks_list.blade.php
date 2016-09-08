@@ -75,6 +75,16 @@
                         </div>
                     </div>
                 </div>
+                <div class="panel-footer">
+                    @if(empty($homework['attachments'][0]))
+                        Attachments: -
+                    @else
+                        Attachments:
+                        @foreach($homework['attachments'] as $attachment)
+                            <a href="/file/download/{{$attachment->id}}">{{$attachment->name}}</a>
+                        @endforeach
+                    @endif
+                </div>
                 </div>
             </div>
         </div>

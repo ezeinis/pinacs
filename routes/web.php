@@ -54,7 +54,7 @@ Route::group(['middleware' => 'admin'], function()
     Route::get('/admin/homework/edit','Admin\AdminHomeworksController@editHomework');
     Route::get('/admin/homework/state/{id}/{state}','Admin\AdminHomeworksController@changeHomeworkState');
     Route::get('/admin/homeworks/add/new','Admin\AdminHomeworksController@addHomeworkView');
-    Route::get('/admin/homework/add','Admin\AdminHomeworksController@addHomework');
+    Route::post('/admin/homework/add','Admin\AdminHomeworksController@addHomework');
     Route::get('/admin/homeworks/{homework_id}/grades','Admin\AdminHomeworksController@showHomeworkGradesView');
     Route::get('/admin/homeworks/grades/store','Admin\AdminHomeworksController@storeGrades');
     //transfer students
@@ -100,4 +100,5 @@ Route::group(['middleware' => 'sentauth'], function()
     Route::get('/profile', ['uses' => 'ProfileController@showProfile']);
     Route::get('/profile/edit', ['uses' => 'ProfileController@editProfileView']);
     Route::get('/edit/profile', ['uses' => 'ProfileController@editProfile']);
+    Route::get('/file/download/{id}','DownloadsController@downloadFile');
 });

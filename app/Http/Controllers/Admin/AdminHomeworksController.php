@@ -10,6 +10,7 @@ use App\ClassYear;
 use Carbon\Carbon;
 use App\HomeworkClassYear;
 use Sentinel;
+use App\Attachment;
 use App\Homework;
 use App\Grade;
 
@@ -18,7 +19,7 @@ class AdminHomeworksController extends Controller
     public function showHomeworks($class_index)
     {
         $current_date = Carbon::today();
-        $current_classes_teached = ClassYear::with('level_class','homeworks')->where('starting','<=',$current_date)->where('ending','>=',$current_date)->get();
+        $current_classes_teached = ClassYear::with('level_class','homeworks.attachments')->where('starting','<=',$current_date)->where('ending','>=',$current_date)->get();
         //dd(empty($current_classes_teached[0]));
         return view('protected.admin.homeworks_list',compact('current_classes_teached','class_index'));
     }
@@ -60,21 +61,34 @@ class AdminHomeworksController extends Controller
         return view('protected.admin.homework_add_view',compact('current_classes_teaching'));
     }
 
-    public function addHomework(Request $request)
+    public function addHomework()
     {
         $user = Sentinel::getUser();
         $homework = new Homework;
         $homework->user_id=$user->id;
-        $homework->text=$request->text;
+        $homework->text=request()->text;
         $homework->type="homework";
         $homework->save();
         $homework_class_year = new HomeworkClassYear;
         $homework_class_year->homework_id=$homework->id;
-        $homework_class_year->class_year_id=$request->class;
-        $homework_class_year->start_date=$request->starting_date;
-        $homework_class_year->due_date=$request->ending_date;
-        $homework_class_year->state=$request->state;
+        $homework_class_year->class_year_id=request()->class;
+        $homework_class_year->start_date=request()->starting_date;
+        $homework_class_year->due_date=request()->ending_date;
+        $homework_class_year->state=request()->state;
         $homework_class_year->save();
+
+        for ($i=1; $i <6 ; $i++) {
+            $file=request()->file('file_'.$i);
+            if($file!=null){
+                $path=$file->store('uploads');
+                $attachment = new Attachment;
+                $attachment->homework_id=$homework->id;
+                $attachment->name=$file->getClientOriginalName();
+                $attachment->file_path=$path;
+                $attachment->save();
+
+            }
+        }
 
         return redirect('/admin/homeworks/0');
     }

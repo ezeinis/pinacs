@@ -1,0 +1,24 @@
+Migrations
+php artisan make:migration create_users_table --table=users
+
+Tinker
+DB::table('cards')->get();
+$user = DB::table('users')->where('name', 'John')->first();
+DB::table('cards')->where('id',1)->first();
+DB::table('cards')->where('id',1)->delete();
+
+Query builder -> https://laravel.com/docs/5.0/queries
+
+Eloquent - > https://laravel.com/docs/5.1/eloquent-relationships
+
+Models - Tinker
+namespace App;
+Card::all();
+Card::find(1);
+
+layout file 
+@yield('main')
+
+route to controller
+Route::get('/', 'PagesController@showCards');
+

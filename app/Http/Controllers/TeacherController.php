@@ -7,6 +7,7 @@ use Sentinel;
 use App\User;
 use App\ClassYear;
 use App\Homework;
+use App\Attachment;
 use App\Grade;
 use App\HomeworkClassYear;
 use App\Http\Requests;
@@ -46,7 +47,7 @@ class TeacherController extends Controller
     {
         //get user
         $user = Sentinel::getUser();
-        $user=User::where('id',$user->id)->with('current_class.level_class','current_class.homeworks')->get();
+        $user=User::where('id',$user->id)->with('current_class.level_class','current_class.homeworks.attachments')->get();
         $user=$user[0];
         //get current class
         //dd($user);
@@ -96,6 +97,7 @@ class TeacherController extends Controller
 
     public function addHomework()
     {
+        //dd(request()->file('file_1')->getClientOriginalName());
         $user = Sentinel::getUser();
         $homework = new Homework;
         $homework->user_id=$user->id;
@@ -112,7 +114,14 @@ class TeacherController extends Controller
 
         for ($i=1; $i <6 ; $i++) {
             $file=request()->file('file_'.$i);
-            if($file!=null)$path=$file->store('uploads');
+            if($file!=null){
+                $path=$file->store('uploads');
+                $attachment = new Attachment;
+                $attachment->homework_id=$homework->id;
+                $attachment->name=$file->getClientOriginalName();
+                $attachment->file_path=$path;
+                $attachment->save();
+            }
         }
 
         return redirect('/teacher/homeworks/0');

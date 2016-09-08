@@ -27,7 +27,7 @@ class StudentController extends Controller
     {
         //get user
         $user = Sentinel::getUser();
-        $user=User::where('id',$user->id)->with('current_class.level_class','current_class.homeworks','student_homeworks_grades')->get();
+        $user=User::where('id',$user->id)->with('current_class.level_class','current_class.homeworks.attachments','student_homeworks_grades')->get();
         $user=$user[0];
         //get current class
         //dd($user);

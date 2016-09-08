@@ -16,7 +16,7 @@ class CreateGradesTable extends Migration
         Schema::create('grades', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('homework_id')->unsigned();
-            $table->foreign('homework_id')->references('id')->on('class_years');
+            $table->foreign('homework_id')->references('id')->on('homeworks');
             $table->integer('student_id')->unsigned();
             $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('teacher_id')->unsigned();

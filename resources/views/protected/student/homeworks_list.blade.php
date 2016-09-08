@@ -38,6 +38,16 @@
                         <div class="panel-body">
                             {!! $homework->text !!}
                         </div>
+                        <div class="panel-footer">
+                            @if(empty($homework['attachments'][0]))
+                                Attachments: -
+                            @else
+                                Attachments:
+                                @foreach($homework['attachments'] as $attachment)
+                                    <a href="/file/download/{{$attachment->id}}">{{$attachment->name}}</a>
+                                @endforeach
+                            @endif
+                        </div>
                         @if($comments)
                             @if(array_key_exists($homework->pivot->homework_id,$comments))
                                 @if($comments[$homework->id])

@@ -18,6 +18,7 @@ class CreateAttachmentsTable extends Migration
             $table->integer('homework_id')->unsigned();
             $table->foreign('homework_id')->references('id')->on('homeworks')->onDelete('cascade');
             $table->string('file_path');
+            $table->string('name',40);
 
             $table->timestamps();
         });

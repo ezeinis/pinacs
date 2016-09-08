@@ -1,0 +1,63 @@
+-- phpMyAdmin SQL Dump
+-- version 4.0.10deb1
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: Aug 11, 2016 at 10:41 AM
+-- Server version: 5.5.49-0ubuntu0.14.04.1
+-- PHP Version: 5.5.9-1ubuntu4.17
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Database: `pinacs`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Attends`
+--
+
+CREATE TABLE IF NOT EXISTS `Attends` (
+  `id` int(11) NOT NULL,
+  `class` int(11) NOT NULL,
+  `student` int(11) NOT NULL,
+  `year` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Attends_fk0` (`class`),
+  KEY `Attends_fk1` (`student`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `Attends`
+--
+
+INSERT INTO `Attends` (`id`, `class`, `student`, `year`) VALUES
+(0, 0, 0, '2014-2015'),
+(1, 1, 1, '2014-2015'),
+(2, 2, 0, '2015-2016'),
+(3, 3, 1, '2015-2016'),
+(4, 0, 2, '2015-2016');
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `Attends`
+--
+ALTER TABLE `Attends`
+  ADD CONSTRAINT `Attends_fk1` FOREIGN KEY (`student`) REFERENCES `Student` (`id`),
+  ADD CONSTRAINT `Attends_fk0` FOREIGN KEY (`class`) REFERENCES `Class` (`id`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
