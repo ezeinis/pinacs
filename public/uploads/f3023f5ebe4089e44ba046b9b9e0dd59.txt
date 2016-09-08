@@ -1,0 +1,77 @@
+CREATE TABLE `Teacher` (
+	`id` INT NOT NULL,
+	`name` varchar NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `Class` (
+	`id` INT NOT NULL,
+	`name` varchar NOT NULL,
+	`level` varchar NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `Level` (
+	`id` INT NOT NULL,
+	`name` varchar NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `Teaches` (
+	`id` INT NOT NULL,
+	`teaching_year` varchar NOT NULL,
+	`teacher` INT NOT NULL,
+	`class` INT NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `Student` (
+	`id` INT NOT NULL,
+	`name` varchar NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `Attends` (
+	`id` INT NOT NULL,
+	`class` INT NOT NULL,
+	`student` INT NOT NULL,
+	`year` varchar NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `Homework` (
+	`id` INT NOT NULL,
+	`text` TEXT NOT NULL,
+	`files` TEXT NOT NULL,
+	`by_teacher` INT NOT NULL,
+	`for_class` INT NOT NULL,
+	`for_teachin_year` INT NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `Homework_Grades` (
+	`id` INT NOT NULL,
+	`grade` INT NOT NULL,
+	`attends_id` INT NOT NULL,
+	PRIMARY KEY (`id`)
+);
+
+ALTER TABLE `Class` ADD CONSTRAINT `Class_fk0` FOREIGN KEY (`level`) REFERENCES `Level`(`id`);
+
+ALTER TABLE `Teaches` ADD CONSTRAINT `Teaches_fk0` FOREIGN KEY (`teacher`) REFERENCES `Teacher`(`id`);
+
+ALTER TABLE `Teaches` ADD CONSTRAINT `Teaches_fk1` FOREIGN KEY (`class`) REFERENCES `Class`(`id`);
+
+ALTER TABLE `Attends` ADD CONSTRAINT `Attends_fk0` FOREIGN KEY (`class`) REFERENCES `Class`(`id`);
+
+ALTER TABLE `Attends` ADD CONSTRAINT `Attends_fk1` FOREIGN KEY (`student`) REFERENCES `Student`(`id`);
+
+ALTER TABLE `Homework` ADD CONSTRAINT `Homework_fk0` FOREIGN KEY (`by_teacher`) REFERENCES `Teacher`(`id`);
+
+ALTER TABLE `Homework` ADD CONSTRAINT `Homework_fk1` FOREIGN KEY (`for_class`) REFERENCES `Teaches`(`class`);
+
+ALTER TABLE `Homework` ADD CONSTRAINT `Homework_fk2` FOREIGN KEY (`for_teachin_year`) REFERENCES `Teaches`(`teaching_year`);
+
+ALTER TABLE `Homework_Grades` ADD CONSTRAINT `Homework_Grades_fk0` FOREIGN KEY (`attends_id`) REFERENCES `Attends`(`id`);
+
+

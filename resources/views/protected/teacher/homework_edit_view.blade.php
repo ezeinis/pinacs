@@ -5,7 +5,8 @@
 @stop
 
 @section('content')
-    <form method="GET" action="/teacher/homework/edit">
+    <form method="POST" action="/teacher/homework/edit" enctype="multipart/form-data">
+    {{csrf_field()}}
         <div class="form-group">
             <label class="control-label col-xs-2" for="">Starting date</label>
             <div class="input-group date col-xs-4" id="" data-date="{{explode(' ',$homework->start_date)[0]}}" data-date-format="yyyy-mm-dd">
@@ -40,6 +41,21 @@
         </div>
         <div class="form-group">
             <textarea name="text">{{$homework['homework']->text}}</textarea>
+        </div>
+        <div class="form-group">
+            <label>Attachments: </label>
+            @foreach($homework['homework']['attachments'] as $attachment)
+                <a href="/file/download/{{$attachment->id}}">{{$attachment->name}}</a>
+                <a href="/teacher/delete/attachment/{{$attachment->id}}"><i style="color:#cd0000;" class="fa fa-times" aria-hidden="true"></i></a>
+            @endforeach
+        </div>
+        <div class="form-group">
+            <label>Upload files</label>
+            <input type="file" name="file_1" id="file_1">
+            <input type="file" name="file_2" id="file_2">
+            <input type="file" name="file_3" id="file_3">
+            <input type="file" name="file_4" id="file_4">
+            <input type="file" name="file_5" id="file_5">
         </div>
         <input type="hidden" name="id" value="{{$homework->id}}">
         <input type="hidden" name="class_index" value="{{$class_index}}">

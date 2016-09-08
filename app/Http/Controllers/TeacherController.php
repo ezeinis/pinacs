@@ -65,21 +65,34 @@ class TeacherController extends Controller
     public function editHomeworkView($class_index,$homework_id)
     {
         //get user
-        $homework=HomeworkClassYear::where('id',$homework_id)->with('homework')->get()[0];
+        $homework=HomeworkClassYear::where('id',$homework_id)->with('homework.attachments')->get()[0];
         //dd($homework);
         return view('protected.teacher.homework_edit_view',compact('homework','homework_id','class_index'));
     }
 
-    public function editHomework(Request $request)
+    public function editHomework()
     {
-        $homework=HomeworkClassYear::where('id',$request->id)->with('homework')->get()[0];
-        $homework->start_date=$request->starting_date;
-        $homework->due_date=$request->ending_date;
-        $homework->state=$request->state;
+        $homework=HomeworkClassYear::where('id',request()->id)->with('homework')->get()[0];
+        $homework->start_date=request()->starting_date;
+        $homework->due_date=request()->ending_date;
+        $homework->state=request()->state;
         $homework->save();
-        $homework['homework']->text=$request->text;
+        $homework['homework']->text=request()->text;
         $homework['homework']->save();
-        return redirect('/teacher/homeworks/'.$request->class_index);
+
+        for ($i=1; $i <6 ; $i++) {
+            $file=request()->file('file_'.$i);
+            if($file!=null){
+                $path=$file->store('uploads');
+                $attachment = new Attachment;
+                $attachment->homework_id=$homework->id;
+                $attachment->name=$file->getClientOriginalName();
+                $attachment->file_path=$path;
+                $attachment->save();
+            }
+        }
+
+        return redirect('/teacher/homeworks/'.request()->class_index);
     }
 
     public function addHomeworkView()
@@ -195,6 +208,21 @@ class TeacherController extends Controller
 
             }
         }
+        return back();
+    }
+
+    public function deleteAttachment($attachment_id)
+    {
+        $attachment = Attachment::where('id',$attachment_id)->get()[0];
+        $file_name=$attachment->name;
+        $attachment->delete();
+        //an to arxeio den xrhsimopoieitai allou sbhsto
+        // $attachment = Attachment::where('name',$file_name)->get()[0];
+        // if(empty($attachment)){
+        //     dd("empoty");
+        // }else{
+        //     dd("not empoty");
+        // }
         return back();
     }
 }

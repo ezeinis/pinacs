@@ -71,12 +71,13 @@ Route::group(['middleware' => 'teacher'], function()
 
     Route::get('/teacher/homeworks/{class_index}','TeacherController@showHomeworks');
     Route::get('/teacher/homeworks/{class_index}/edit/{homework_id}','TeacherController@editHomeworkView');
-    Route::get('/teacher/homework/edit','TeacherController@editHomework');
+    Route::post('/teacher/homework/edit','TeacherController@editHomework');
     Route::get('/teacher/homeworks/add/new','TeacherController@addHomeworkView');
     Route::post('/teacher/homework/add','TeacherController@addHomework');
     Route::get('/teacher/homework/state/{id}/{state}','TeacherController@changeHomeworkState');
     Route::get('/teacher/homeworks/{homework_id}/grades','TeacherController@showHomeworkGradesView');
     Route::get('/teacher/homeworks/grades/store','TeacherController@storeGrades');
+    Route::get('/teacher/delete/attachment/{attachment_id}','TeacherController@deleteAttachment');
 });
 
 //student routes
