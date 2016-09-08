@@ -50,7 +50,6 @@ class User extends Authenticatable
     public function current_class()
     {
         $current_date = Carbon::today();
-        $current_date="2017-09-07 00:00:00.000000";
         return $this->belongsToMany(ClassYear::class,'assigns','user_id','class_year_id')->where('starting','<=',$current_date)->where('ending','>=',$current_date);
     }
 

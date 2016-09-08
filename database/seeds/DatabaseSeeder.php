@@ -60,14 +60,14 @@ class DatabaseSeeder extends Seeder
             'parent_to' => NULL,
         ]);
 
-        // Sentinel::registerAndActivate([
-        //     'email'    => 'ezeinis14@gmail.com',
-        //     'password' => 'e21111991',
-        //     'first_name' => 'Alexis',
-        //     'last_name' => 'Nearxou',
-        //     'phone' => '96718318',
-        //     'parent_to' => NULL,
-        // ]);
+        Sentinel::registerAndActivate([
+            'email'    => 'ezeinis20@gmail.com',
+            'password' => 'e21111991',
+            'first_name' => 'Alexis',
+            'last_name' => 'Nearxou',
+            'phone' => '96718318',
+            'parent_to' => NULL,
+        ]);
 
         // Sentinel::registerAndActivate([
         //     'email'    => 'ezeinis12@gmail.com',
@@ -87,14 +87,14 @@ class DatabaseSeeder extends Seeder
         //     'parent_to' => NULL,
         // ]);
 
-        // Sentinel::registerAndActivate([
-        //     'email'    => 'ezeinis13@gmail.com',
-        //     'password' => 'e21111991',
-        //     'first_name' => 'Efthimis',
-        //     'last_name' => 'Zeinis',
-        //     'phone' => '96718318',
-        //     'parent_to' => NULL,
-        // ]);
+        Sentinel::registerAndActivate([
+            'email'    => 'ezeinis13@gmail.com',
+            'password' => 'e21111991',
+            'first_name' => 'Efthimis',
+            'last_name' => 'Zeinis',
+            'phone' => '96718318',
+            'parent_to' => NULL,
+        ]);
 
         // Sentinel::registerAndActivate([
         //     'email'    => 'ezeinis15@gmail.com',
@@ -155,64 +155,64 @@ class DatabaseSeeder extends Seeder
 
         // $userUser = Sentinel::findByCredentials(['login' => 'user@user.com']);
         $adminUser = Sentinel::findByCredentials(['login' => 'admin@admin.com']);
-        // $studentUser = Sentinel::findByCredentials(['login' => 'ezeinis13@gmail.com']);
+        $studentUser = Sentinel::findByCredentials(['login' => 'ezeinis13@gmail.com']);
         // $studentUser2 = Sentinel::findByCredentials(['login' => 'ezeinis15@gmail.com']);
         // $studentUser3 = Sentinel::findByCredentials(['login' => 'ezeinis16@gmail.com']);
         // $studentUser4 = Sentinel::findByCredentials(['login' => 'ezeinis17@gmail.com']);
         // $studentUser5 = Sentinel::findByCredentials(['login' => 'ezeinis18@gmail.com']);
         // $studentUser6 = Sentinel::findByCredentials(['login' => 'ezeinis19@gmail.com']);
         // $parentUser = Sentinel::findByCredentials(['login' => 'stathiszeinis@gmail.com']);
-        // $teacherUser = Sentinel::findByCredentials(['login' => 'ezeinis14@gmail.com']);
+        $teacherUser = Sentinel::findByCredentials(['login' => 'ezeinis20@gmail.com']);
         // $teacherUser2 = Sentinel::findByCredentials(['login' => 'ezeinis12@gmail.com']);
         // $teacherUser3 = Sentinel::findByCredentials(['login' => 'ezeinis11@gmail.com']);
 
         // $userRole = Sentinel::findRoleByName('Users');
         $adminRole = Sentinel::findRoleByName('Admins');
-        // $studentRole = Sentinel::findRoleByName('Students');
-        // $teacherRole = Sentinel::findRoleByName('Teachers');
+        $studentRole = Sentinel::findRoleByName('Students');
+        $teacherRole = Sentinel::findRoleByName('Teachers');
         // $parentRole = Sentinel::findRoleByName('Parents');
 
         // // Assign the roles to the users
         // $userRole->users()->attach($userUser);
         $adminRole->users()->attach($adminUser);
-        // $studentRole->users()->attach($studentUser);
+        $studentRole->users()->attach($studentUser);
         // $studentRole->users()->attach($studentUser2);
         // $studentRole->users()->attach($studentUser3);
         // $studentRole->users()->attach($studentUser4);
         // $studentRole->users()->attach($studentUser5);
         // $studentRole->users()->attach($studentUser6);
-        // $teacherRole->users()->attach($teacherUser);
+        $teacherRole->users()->attach($teacherUser);
         // $teacherRole->users()->attach($teacherUser2);
         // $teacherRole->users()->attach($teacherUser3);
         // $parentRole->users()->attach($parentUser);
 
         $this->command->info('Users assigned to roles seeded!');
 
-        // $level_class = new LevelClass;
-        // $level_class->id=1;
-        // $level_class->name="Pro Junior";
-        // $level_class->parent=NULL;
-        // $level_class->save();
-        // $level_class = new LevelClass;
-        // $level_class->id=2;
-        // $level_class->name="Junior";
-        // $level_class->parent=NULL;
-        // $level_class->save();
-        // $level_class = new LevelClass;
-        // $level_class->id=3;
-        // $level_class->name="Pro Junior 1";
-        // $level_class->parent=1;
-        // $level_class->save();
+        $level_class = new LevelClass;
+        $level_class->id=1;
+        $level_class->name="Pro Junior";
+        $level_class->parent=NULL;
+        $level_class->save();
+        $level_class = new LevelClass;
+        $level_class->id=2;
+        $level_class->name="Junior";
+        $level_class->parent=NULL;
+        $level_class->save();
+        $level_class = new LevelClass;
+        $level_class->id=3;
+        $level_class->name="Pro Junior 1";
+        $level_class->parent=1;
+        $level_class->save();
         // $level_class = new LevelClass;
         // $level_class->id=4;
         // $level_class->name="Pro Junior 2";
         // $level_class->parent=1;
         // $level_class->save();
-        // $level_class = new LevelClass;
-        // $level_class->id=5;
-        // $level_class->name="Junior 1";
-        // $level_class->parent=2;
-        // $level_class->save();
+        $level_class = new LevelClass;
+        $level_class->id=4;
+        $level_class->name="Junior 1";
+        $level_class->parent=2;
+        $level_class->save();
         // $level_class = new LevelClass;
         // $level_class->id=6;
         // $level_class->name="Junior 2";
@@ -221,20 +221,20 @@ class DatabaseSeeder extends Seeder
 
         $this->command->info('level_class seeded');
 
-        // $class_year = new ClassYear;
-        // $class_year->id = 1;
-        // $class_year->level_class_id = 3;
-        // $class_year->school_year = "2015-2016";
-        // $class_year->starting = '2015-09-15';
-        // $class_year->ending = '2016-09-14';
-        // $class_year->save();
-        // $class_year = new ClassYear;
-        // $class_year->id = 2;
-        // $class_year->level_class_id = 3;
-        // $class_year->school_year = "2014-2015";
-        // $class_year->starting = '2014-09-15';
-        // $class_year->ending = '2015-09-14';
-        // $class_year->save();
+        $class_year = new ClassYear;
+        $class_year->id = 1;
+        $class_year->level_class_id = 3;
+        $class_year->school_year = "2015-2016";
+        $class_year->starting = '2015-09-01';
+        $class_year->ending = '2016-08-31';
+        $class_year->save();
+        $class_year = new ClassYear;
+        $class_year->id = 2;
+        $class_year->level_class_id = 4;
+        $class_year->school_year = "2016-2017";
+        $class_year->starting = '2016-09-01';
+        $class_year->ending = '2017-08-31';
+        $class_year->save();
         // $class_year = new ClassYear;
         // $class_year->id = 3;
         // $class_year->level_class_id = 4;
@@ -266,22 +266,22 @@ class DatabaseSeeder extends Seeder
 
         $this->command->info('class_year_seeded');
 
-        // $assign = new Assign;
-        // $assign->user_id=3;
-        // $assign->class_year_id=2;
-        // $assign->save();
-        // $assign = new Assign;
-        // $assign->user_id=3;
-        // $assign->class_year_id=1;
-        // $assign->save();
-        // $assign = new Assign;
-        // $assign->user_id=3;
-        // $assign->class_year_id=5;
-        // $assign->save();
-        // $assign = new Assign;
-        // $assign->user_id=4;
-        // $assign->class_year_id=4;
-        // $assign->save();
+        $assign = new Assign;
+        $assign->user_id=2;
+        $assign->class_year_id=1;
+        $assign->save();
+        $assign = new Assign;
+        $assign->user_id=3;
+        $assign->class_year_id=1;
+        $assign->save();
+        $assign = new Assign;
+        $assign->user_id=2;
+        $assign->class_year_id=2;
+        $assign->save();
+        $assign = new Assign;
+        $assign->user_id=3;
+        $assign->class_year_id=2;
+        $assign->save();
         // $assign = new Assign;
         // $assign->user_id=4;
         // $assign->class_year_id=3;

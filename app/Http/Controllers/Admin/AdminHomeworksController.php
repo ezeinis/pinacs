@@ -18,7 +18,6 @@ class AdminHomeworksController extends Controller
     public function showHomeworks($class_index)
     {
         $current_date = Carbon::today();
-        $current_date="2017-09-07 00:00:00.000000";
         $current_classes_teached = ClassYear::with('level_class','homeworks')->where('starting','<=',$current_date)->where('ending','>=',$current_date)->get();
         //dd(empty($current_classes_teached[0]));
         return view('protected.admin.homeworks_list',compact('current_classes_teached','class_index'));
@@ -56,7 +55,6 @@ class AdminHomeworksController extends Controller
     {
         //get user
         $current_date = Carbon::today();
-        $current_date="2017-09-07 00:00:00.000000";
         $current_classes_teaching = ClassYear::with('level_class','homeworks')->where('starting','<=',$current_date)->where('ending','>=',$current_date)->get();
         //dd($current_classes_teaching);
         return view('protected.admin.homework_add_view',compact('current_classes_teaching'));

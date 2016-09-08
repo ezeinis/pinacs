@@ -10,7 +10,8 @@
             <h4>New Homework</h4>
         </div>
     </div>
-    <form method="GET" action="/teacher/homework/add">
+    <form method="POST" action="/teacher/homework/add" enctype="multipart/form-data">
+        {{csrf_field()}}
         <div class="form-group">
             <div class="row">
                 <div class="col-xs-2">
@@ -66,6 +67,14 @@
         </div>
         <div class="form-group">
             <textarea name="text"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Upload files</label>
+            <input type="file" name="file_1" id="file_1">
+            <input type="file" name="file_2" id="file_2">
+            <input type="file" name="file_3" id="file_3">
+            <input type="file" name="file_4" id="file_4">
+            <input type="file" name="file_5" id="file_5">
         </div>
         <div class="form-group">
             <div class="col-xs-5 col-xs-offset-7 text-right">

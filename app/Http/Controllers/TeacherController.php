@@ -10,6 +10,7 @@ use App\Homework;
 use App\Grade;
 use App\HomeworkClassYear;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Input;
 
 class TeacherController extends Controller
 {
@@ -93,21 +94,26 @@ class TeacherController extends Controller
         return view('protected.teacher.homework_add_view',compact('current_classes_teaching'));
     }
 
-    public function addHomework(Request $request)
+    public function addHomework()
     {
         $user = Sentinel::getUser();
         $homework = new Homework;
         $homework->user_id=$user->id;
-        $homework->text=$request->text;
+        $homework->text=request()->text;
         $homework->type="homework";
         $homework->save();
         $homework_class_year = new HomeworkClassYear;
         $homework_class_year->homework_id=$homework->id;
-        $homework_class_year->class_year_id=$request->class;
-        $homework_class_year->start_date=$request->starting_date;
-        $homework_class_year->due_date=$request->ending_date;
-        $homework_class_year->state=$request->state;
+        $homework_class_year->class_year_id=request()->class;
+        $homework_class_year->start_date=request()->starting_date;
+        $homework_class_year->due_date=request()->ending_date;
+        $homework_class_year->state=request()->state;
         $homework_class_year->save();
+
+        for ($i=1; $i <6 ; $i++) {
+            $file=request()->file('file_'.$i);
+            if($file!=null)$path=$file->store('uploads');
+        }
 
         return redirect('/teacher/homeworks/0');
     }
